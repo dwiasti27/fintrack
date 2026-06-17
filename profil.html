@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html class="light" lang="id">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>FINTRACK - Profil Pengguna</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="tailwind.config.js"></script>
+    <meta name="description" content="Manajemen Profil Pengguna FINTRACK.">
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Public Sans', sans-serif;
+        }
+    </style>
+    <script src="theme.js"></script>
+    <script src="js/auth.js"></script>
+
+</head>
+<body class="bg-deep-blue text-on-background min-h-screen">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-40 flex justify-between items-center px-6 md:px-12 lg:px-20 h-16 bg-deep-blue/95 backdrop-blur-md border-b border-white/10 shadow-sm">
+    <div class="flex items-center gap-4">
+        <button class="text-white flex items-center" onclick="toggleSidebar()">
+            <span class="material-symbols-outlined">menu</span>
+        </button>
+        <div class="hidden md:flex gap-x-8 items-center">
+            <a class="font-sans antialiased text-sm font-medium text-slate-400 hover:text-primary transition-colors" href="dashboard.html">Dashboard</a>
+            <a class="font-sans antialiased text-sm font-medium text-slate-400 hover:text-primary transition-colors" href="analitik.html">Analitik</a>
+        </div>
+    </div>
+    <div class="flex items-center gap-4">
+        <div class="relative">
+            <span class="material-symbols-outlined text-slate-400 hover:text-white cursor-pointer">notifications</span>
+            <span class="absolute top-0 right-0 w-2 h-2 bg-error rounded-full"></span>
+        </div>
+        
+        <!-- Profile Dropdown Area -->
+        <div class="relative flex items-center gap-3 pl-4 border-l border-white/10">
+            <div class="text-right hidden sm:block">
+                <p class="text-xs font-bold leading-none text-white" data-user-name>...</p>
+                <p class="text-[10px] text-slate-400 leading-none mt-1">Advisor Elite</p>
+            </div>
+            <div class="w-8 h-8 rounded-full bg-slate-800 border border-white/10 flex items-center justify-center text-white text-xs font-bold cursor-pointer hover:bg-white/10 transition" onclick="toggleProfileDropdown(event)" data-user-initials>FT</div>
+            
+            <!-- Dropdown Menu -->
+            <div id="profile-dropdown" class="absolute top-full right-0 mt-4 w-56 bg-[#0B1121]/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl py-2 hidden flex-col z-50">
+                <div class="px-4 py-3 border-b border-white/5">
+                    <p class="text-sm font-bold text-white" data-user-name>...</p>
+                    <p class="text-xs text-slate-400 mt-0.5" data-user-email>...</p>
+                </div>
+                <a href="profil.html" class="flex items-center px-4 py-2.5 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
+                    <span class="material-symbols-outlined text-[18px] mr-3">person</span> Lihat Profil
+                </a>
+                <a href="pengaturan.html" class="flex items-center px-4 py-2.5 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
+                    <span class="material-symbols-outlined text-[18px] mr-3">settings</span> Pengaturan
+                </a>
+                <div class="border-t border-white/5 my-1"></div>
+                <a href="#" onclick="logout()" class="flex items-center px-4 py-2.5 text-sm text-error hover:bg-error/10 transition-colors">
+                    <span class="material-symbols-outlined text-[18px] mr-3">logout</span> Keluar
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Sidebar Overlay -->
+<div id="sidebar-overlay" class="fixed inset-0 bg-black/60 z-40 hidden backdrop-blur-sm transition-all duration-300" onclick="toggleSidebar()"></div>
+
+<!-- SideNavBar -->
+<aside id="sidebar" class="transform -translate-x-full transition-transform duration-300 fixed left-0 top-0 h-full w-[260px] bg-deep-blue flex flex-col py-6 z-50 border-r border-white/5">
+    <div class="px-6 mb-10 flex justify-between items-center">
+        <div class="text-2xl font-black tracking-tighter flex items-center gap-2">
+            <span class="text-white">FIN</span><span class="text-primary">TRACK</span>
+        </div>
+        <button class="text-slate-400 hover:text-white" onclick="toggleSidebar()">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+    </div>
+    <nav class="flex-1 px-3 space-y-1">
+        <a class="flex items-center px-4 py-3 text-slate-400 hover:bg-white/5 hover:text-white border-l-4 border-transparent font-sans text-sm font-semibold transition-all group" href="dashboard.html">
+            <span class="material-symbols-outlined mr-3">dashboard</span>Dashboard
+        </a>
+        <a class="flex items-center px-4 py-3 text-slate-400 hover:bg-white/5 hover:text-white border-l-4 border-transparent font-sans text-sm font-semibold transition-all group" href="transaksi.html">
+            <span class="material-symbols-outlined mr-3">receipt_long</span>Transaksi
+        </a>
+        <div class="px-4 pb-2">
+            <a class="flex items-center justify-center px-4 py-2 text-primary border border-primary/30 rounded-lg font-sans text-sm font-bold transition-all hover:bg-primary hover:text-white group shadow-sm bg-primary/5" href="tambah_transaksi.html">
+                <span class="material-symbols-outlined mr-2 text-[18px]">add</span>Tambah Transaksi
+            </a>
+        </div>
+        <a class="flex items-center px-4 py-3 text-slate-400 hover:bg-white/5 hover:text-white border-l-4 border-transparent font-sans text-sm font-semibold transition-all group" href="kategori.html">
+            <span class="material-symbols-outlined mr-3">category</span>Kategori
+        </a>
+        <a class="flex items-center px-4 py-3 text-slate-400 hover:bg-white/5 hover:text-white border-l-4 border-transparent font-sans text-sm font-semibold transition-all group" href="pengaturan.html">
+            <span class="material-symbols-outlined mr-3">settings</span>Pengaturan
+        </a>
+        <!-- Special Menu -->
+        <div class="pt-6 pb-2">
+            <a class="flex items-center px-4 py-3 text-slate-400 hover:text-white transition-all group cursor-pointer" onclick="openAiComingSoonModal(event)">
+                <span class="material-symbols-outlined mr-3 text-slate-500">auto_awesome</span>
+                <div class="flex flex-col">
+                    <span class="text-sm font-semibold text-slate-400">✨ Tanya with AI</span>
+                    <span class="text-[9px] font-bold uppercase tracking-wider text-slate-500 leading-none mt-0.5">Coming Soon</span>
+                </div>
+            </a>
+        </div>
+    </nav>
+    <div class="px-3">
+        <div class="border-t border-white/5 mb-2 mx-3"></div>
+        <a class="flex items-center px-4 py-3 text-slate-400 hover:bg-white/5 hover:text-white rounded-lg font-sans text-sm font-semibold transition-all" href="support.html">
+            <span class="material-symbols-outlined mr-3">help</span>Support
+        </a>
+        <a class="flex items-center px-4 py-3 text-red-400 hover:bg-red-500/10 rounded-lg font-sans text-sm font-semibold transition-all" href="#" onclick="logout()">
+            <span class="material-symbols-outlined mr-3 text-red-400">logout</span>Logout
+        </a>
+    </div>
+</aside>
+
+<!-- Main Content Canvas -->
+<main class="ml-0 pt-24 pb-32 px-6 md:px-12 lg:px-20 min-h-screen bg-deep-blue w-full flex flex-col">
+    <div class="w-full mx-auto space-y-8 flex-1">
+        
+        <!-- Header -->
+        <header class="flex flex-col md:flex-row md:justify-between md:items-end gap-6 mb-8">
+            <div>
+                <a href="dashboard.html" class="inline-flex items-center text-slate-400 hover:text-primary transition-colors text-sm font-bold mb-4 group">
+                    <span class="material-symbols-outlined text-[18px] mr-1 group-hover:-translate-x-1 transition-transform">arrow_back</span>
+                    Kembali ke Dashboard
+                </a>
+                <h1 class="font-h2 text-3xl font-bold text-white mb-2">Profil & Keamanan</h1>
+                <p class="text-slate-400 font-body-md text-sm">Kelola informasi pribadi dan keamanan akun Anda.</p>
+            </div>
+            <button id="btn-simpan" onclick="simpanProfil()" class="bg-primary/10 border border-primary/30 text-primary hover:bg-primary hover:text-deep-blue px-5 py-2.5 rounded-lg font-bold text-sm transition-all shadow-[0_0_15px_rgba(0,240,255,0.1)]">
+                Simpan Perubahan
+            </button>
+        </header>
+
+        <!-- 2 Column Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+            
+            <!-- Left Card: ID Card / Avatar -->
+            <div class="lg:col-span-1 bg-white/5 border border-white/10 p-8 rounded-2xl shadow-xl flex flex-col items-center text-center relative overflow-hidden group">
+                <!-- Background Decoration -->
+                <div class="absolute inset-0 bg-gradient-to-b from-primary/10 to-transparent opacity-50"></div>
+                <div class="absolute top-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent"></div>
+                
+                <div class="relative w-32 h-32 rounded-full border-4 border-white/10 mb-6 flex items-center justify-center bg-slate-800 text-5xl font-black text-white group-hover:border-primary/50 transition-all cursor-pointer overflow-hidden">
+                    <span id="avatar-initials" data-user-initials>FT</span>
+                    <!-- Hover Camera Overlay -->
+                    <div class="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        <span class="material-symbols-outlined text-white text-3xl">photo_camera</span>
+                    </div>
+                </div>
+                
+                <h2 class="text-2xl font-bold text-white relative z-10" data-user-name>...</h2>
+                <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/20 border border-primary/30 text-primary text-[10px] font-bold uppercase tracking-widest mt-3 relative z-10">
+                    <span class="material-symbols-outlined text-[14px]">stars</span> Advisor Elite
+                </div>
+                
+                <div class="w-full border-t border-white/10 my-8 relative z-10"></div>
+                
+                <div class="w-full flex justify-between text-sm relative z-10">
+                    <div class="flex flex-col items-center">
+                        <span class="text-white font-bold text-lg" id="stat-bergabung">...</span>
+                        <span class="text-slate-500 text-[10px] uppercase tracking-wider font-bold">Bergabung</span>
+                    </div>
+                    <div class="h-8 w-[1px] bg-white/10"></div>
+                    <div class="flex flex-col items-center">
+                        <span class="text-white font-bold text-lg">15</span>
+                        <span class="text-slate-500 text-[10px] uppercase tracking-wider font-bold">Kategori</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Card: Edit Form -->
+            <div class="lg:col-span-2 bg-white/5 border border-white/10 rounded-2xl shadow-xl overflow-hidden">
+                <!-- Form Section 1: Informasi Pribadi -->
+                <div class="p-8 border-b border-white/5">
+                    <h3 class="text-lg font-bold text-white mb-6 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">person</span> Informasi Pribadi
+                    </h3>
+                <!-- Alert -->
+                <div id="profil-alert" class="hidden mx-8 mt-6 flex items-center gap-2 px-4 py-3 rounded-lg text-sm"></div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="text-xs font-bold text-slate-400 uppercase tracking-widest">Nama Lengkap</label>
+                            <input id="input-nama" type="text" class="w-full bg-slate-900/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all" placeholder="Nama Lengkap">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-xs font-bold text-slate-400 uppercase tracking-widest">Email Address</label>
+                            <input id="input-email" type="email" class="w-full bg-slate-900/50 border border-white/10 rounded-lg px-4 py-3 text-slate-400 cursor-not-allowed focus:outline-none" disabled placeholder="email@example.com">
+                            <p class="text-[10px] text-slate-500 mt-1">Email tidak dapat diubah secara mandiri.</p>
+                        </div>
+                        <div class="space-y-2 md:col-span-2">
+                            <label class="text-xs font-bold text-slate-400 uppercase tracking-widest">Nomor Handphone (Opsional)</label>
+                            <input id="input-nohp" type="tel" placeholder="+62 812 3456 7890" class="w-full bg-slate-900/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Section 2: Keamanan -->
+                <div class="p-8">
+                    <h3 class="text-lg font-bold text-white mb-6 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">lock</span> Keamanan Akun
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="text-xs font-bold text-slate-400 uppercase tracking-widest">Kata Sandi Baru</label>
+                            <input id="input-password" type="password" placeholder="Biarkan kosong jika tidak diubah" class="w-full bg-slate-900/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-xs font-bold text-slate-400 uppercase tracking-widest">Konfirmasi Kata Sandi</label>
+                            <input id="input-konfirmasi" type="password" placeholder="Ulangi kata sandi baru" class="w-full bg-slate-900/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all">
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="mt-12 text-center text-[10px] text-slate-500 font-bold uppercase tracking-[0.2em] w-full pb-6">
+        © 2026 FINTRACK. Professional Financial Advisory.
+    </footer>
+</main>
+
+<script>
+    checkAuth();
+    populateUserUI();
+
+    // Pre-fill form with current user data
+    const user = getCurrentUser();
+    if (user) {
+        document.getElementById('input-nama').value = user.nama_lengkap || '';
+        document.getElementById('input-email').value = user.email || '';
+        document.getElementById('input-nohp').value = (user.kode_negara || '') + (user.no_hp || '');
+        // Bergabung date
+        const joined = new Date(user.created_at || Date.now());
+        document.getElementById('stat-bergabung').textContent = joined.toLocaleDateString('id-ID', {month:'short', year:'numeric'});
+    }
+
+    async function simpanProfil() {
+        const btn = document.getElementById('btn-simpan');
+        const alertEl = document.getElementById('profil-alert');
+        const nama = document.getElementById('input-nama').value.trim();
+        const password = document.getElementById('input-password').value;
+        const konfirmasi = document.getElementById('input-konfirmasi').value;
+
+        if (password && password !== konfirmasi) {
+            alertEl.className = 'mx-8 mt-6 flex items-center gap-2 px-4 py-3 rounded-lg text-sm bg-red-500/10 border border-red-500/30 text-red-400';
+            alertEl.textContent = 'Kata sandi dan konfirmasi tidak cocok!';
+            return;
+        }
+
+        btn.textContent = 'Menyimpan...';
+        btn.disabled = true;
+
+        const payload = { nama_lengkap: nama };
+        if (password) payload.password = password;
+
+        const res = await apiFetch('/profil', { method: 'PUT', body: JSON.stringify(payload) });
+        btn.textContent = 'Simpan Perubahan';
+        btn.disabled = false;
+
+        if (res && res.status === 'success') {
+            // Update localStorage
+            const updatedUser = { ...user, nama_lengkap: nama };
+            localStorage.setItem('fintrack_user', JSON.stringify(updatedUser));
+            populateUserUI();
+            alertEl.className = 'mx-8 mt-6 flex items-center gap-2 px-4 py-3 rounded-lg text-sm bg-green-500/10 border border-green-500/30 text-green-400';
+            alertEl.textContent = '✅ Profil berhasil disimpan!';
+        } else {
+            alertEl.className = 'mx-8 mt-6 flex items-center gap-2 px-4 py-3 rounded-lg text-sm bg-red-500/10 border border-red-500/30 text-red-400';
+            alertEl.textContent = res?.message || 'Gagal menyimpan perubahan.';
+        }
+    }
+
+    function toggleSidebar() {
+        document.getElementById('sidebar').classList.toggle('-translate-x-full');
+        document.getElementById('sidebar-overlay').classList.toggle('hidden');
+    }
+    function toggleProfileDropdown(event) {
+        event.stopPropagation();
+        const dropdown = document.getElementById('profile-dropdown');
+        if(dropdown.classList.contains('hidden')) {
+            dropdown.classList.remove('hidden'); dropdown.classList.add('flex');
+        } else {
+            dropdown.classList.add('hidden'); dropdown.classList.remove('flex');
+        }
+    }
+    window.onclick = function(event) {
+        const dropdown = document.getElementById('profile-dropdown');
+        if (!event.target.closest('#profile-dropdown') && !event.target.closest('[onclick="toggleProfileDropdown(event)"]') && dropdown && !dropdown.classList.contains('hidden')) {
+            dropdown.classList.add('hidden'); dropdown.classList.remove('flex');
+        }
+    }
+</script>
+</body>
+</html>
+
+

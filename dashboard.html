@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html class="light" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FINTRACK - Dashboard Advisor</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="tailwind.config.js"></script>
+<meta name="description" content="FINTRACK adalah solusi cerdas untuk mengelola arus kas, mendeteksi kebocoran finansial, dan mencapai target keuangan dengan presisi tingkat institusi.">
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Public Sans', sans-serif;
+        }
+    </style>
+    <script src="theme.js"></script>
+    <script src="js/auth.js"></script>
+</head>
+<body class="bg-deep-blue text-on-background min-h-screen">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-40 flex justify-between items-center px-6 md:px-12 lg:px-20 h-16 bg-deep-blue/95 backdrop-blur-md border-b border-white/10 shadow-sm">
+<div class="flex items-center gap-4">
+    <button class="text-white flex items-center" onclick="toggleSidebar()">
+        <span class="material-symbols-outlined">menu</span>
+    </button>
+    <div class="hidden md:flex gap-x-8 items-center">
+        <a class="font-sans antialiased text-sm font-semibold text-primary border-b-2 border-primary pb-1" href="dashboard.html">Dashboard</a>
+        <a class="font-sans antialiased text-sm font-medium text-slate-400 hover:text-primary transition-colors" href="analitik.html">Analitik</a>
+    </div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative">
+    <span class="material-symbols-outlined text-slate-400 hover:text-white cursor-pointer transition-colors" onclick="toggleNotificationDropdown(event)">notifications</span>
+    <span class="absolute top-0 right-0 w-2 h-2 bg-error rounded-full pointer-events-none"></span>
+
+    <!-- Notification Dropdown Menu -->
+    <div id="notification-dropdown" class="absolute top-full right-[-60px] md:right-[-20px] mt-6 w-80 bg-[#0B1121]/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl py-2 hidden flex-col z-[60] transform origin-top-right transition-all">
+        <div class="px-5 py-3 border-b border-white/5 flex justify-between items-center">
+            <p class="text-sm font-bold text-white">Notifikasi Terbaru</p>
+            <span class="bg-error/20 text-error text-[10px] font-bold px-2 py-0.5 rounded-full">2 Baru</span>
+        </div>
+        <div class="max-h-[60vh] overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-thumb-white/10">
+            <!-- Notif Item 1 -->
+            <a href="notifikasi.html?id=1" class="block px-5 py-3 border-b border-white/5 hover:bg-white/5 cursor-pointer transition-colors relative">
+                <div class="absolute left-2.5 top-5 w-1.5 h-1.5 bg-error rounded-full"></div>
+                <p class="text-xs font-bold text-white pl-3">Peringatan Anggaran ⚠️</p>
+                <p class="text-[10px] text-slate-400 mt-1 pl-3 line-clamp-2">Anggaran Makanan & Minuman bulan ini sudah mencapai 85%. Kurangi jajan di luar!</p>
+                <p class="text-[9px] text-slate-500 mt-2 pl-3">2 Jam yang lalu</p>
+            </a>
+            <!-- Notif Item 2 -->
+            <a href="notifikasi.html?id=2" class="block px-5 py-3 border-b border-white/5 hover:bg-white/5 cursor-pointer transition-colors relative">
+                <div class="absolute left-2.5 top-5 w-1.5 h-1.5 bg-error rounded-full"></div>
+                <p class="text-xs font-bold text-white pl-3">Analisis AI Tersedia 🧠</p>
+                <p class="text-[10px] text-slate-400 mt-1 pl-3 line-clamp-2">Kami mendeteksi anomali pada pengeluaran operasional Anda minggu ini.</p>
+                <p class="text-[9px] text-slate-500 mt-2 pl-3">5 Jam yang lalu</p>
+            </a>
+            <!-- Notif Item 3 -->
+            <a href="notifikasi.html?id=3" class="block px-5 py-3 hover:bg-white/5 cursor-pointer transition-colors">
+                <p class="text-xs font-bold text-slate-300 pl-3">Laporan Bulan Lalu 📊</p>
+                <p class="text-[10px] text-slate-500 mt-1 pl-3 line-clamp-2">Laporan keuangan bulan Mei sudah bisa diunduh sekarang.</p>
+                <p class="text-[9px] text-slate-600 mt-2 pl-3">Kemarin</p>
+            </a>
+        </div>
+        <div class="p-3 border-t border-white/5 mt-1">
+            <a href="notifikasi.html" class="block w-full py-2 text-center text-xs font-bold text-primary bg-primary/10 hover:bg-primary hover:text-deep-blue rounded-lg transition-all">
+                Lihat Semua Notifikasi
+            </a>
+        </div>
+    </div>
+</div>
+        <!-- Profile Dropdown Area -->
+        <div class="relative flex items-center gap-3 pl-4 border-l border-white/10">
+            <div class="text-right hidden sm:block">
+                <p class="text-xs font-bold leading-none text-white" data-user-name>...</p>
+                <p class="text-[10px] text-slate-400 leading-none mt-1">Advisor Elite</p>
+            </div>
+            <div class="w-8 h-8 rounded-full bg-slate-800 border border-white/10 flex items-center justify-center text-white text-xs font-bold cursor-pointer hover:bg-white/10 transition" onclick="toggleProfileDropdown(event)" data-user-initials>FT</div>
+            
+            <!-- Dropdown Menu -->
+            <div id="profile-dropdown" class="absolute top-full right-0 mt-4 w-56 bg-[#0B1121]/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl py-2 hidden flex-col z-50">
+                <div class="px-4 py-3 border-b border-white/5">
+                    <p class="text-sm font-bold text-white" data-user-name>...</p>
+                    <p class="text-xs text-slate-400 mt-0.5" data-user-email>...</p>
+                </div>
+                <a href="profil.html" class="flex items-center px-4 py-2.5 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
+                    <span class="material-symbols-outlined text-[18px] mr-3">person</span> Lihat Profil
+                </a>
+                <a href="pengaturan.html" class="flex items-center px-4 py-2.5 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
+                    <span class="material-symbols-outlined text-[18px] mr-3">settings</span> Pengaturan
+                </a>
+                <div class="border-t border-white/5 my-1"></div>
+                <a href="#" onclick="logout()" class="flex items-center px-4 py-2.5 text-sm text-error hover:bg-error/10 transition-colors">
+                    <span class="material-symbols-outlined text-[18px] mr-3">logout</span> Keluar
+                </a>
+            </div>
+        </div>
+</div>
+</nav>
+<!-- Sidebar Overlay -->
+<div id="sidebar-overlay" class="fixed inset-0 bg-black/60 z-40 hidden backdrop-blur-sm transition-all duration-300" onclick="toggleSidebar()"></div>
+
+<!-- SideNavBar -->
+<aside id="sidebar" class="transform -translate-x-full transition-transform duration-300 fixed left-0 top-0 h-full w-[260px] bg-deep-blue flex flex-col py-6 z-50 border-r border-white/5">
+<!-- Header Logo -->
+<div class="px-6 mb-10 flex justify-between items-center">
+<div class="text-2xl font-black tracking-tighter flex items-center gap-2">
+<span class="text-white">FIN</span><span class="text-primary">TRACK</span>
+</div>
+<button class="text-slate-400 hover:text-white" onclick="toggleSidebar()">
+    <span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<nav class="flex-1 px-3 space-y-1">
+<!-- Main Menu -->
+<a class="flex items-center px-4 py-3 text-white bg-primary/10 border-l-4 border-primary font-sans text-sm font-semibold transition-all group" href="dashboard.html">
+<span class="material-symbols-outlined mr-3">dashboard</span>
+            Dashboard
+        </a>
+<a class="flex items-center px-4 py-3 text-slate-400 hover:bg-white/5 hover:text-white border-l-4 border-transparent font-sans text-sm font-semibold transition-all group" href="transaksi.html">
+<span class="material-symbols-outlined mr-3">receipt_long</span>
+            Transaksi
+        </a>
+<div class="px-4 pb-2">
+<a class="flex items-center justify-center px-4 py-2 text-primary border border-primary/30 rounded-lg font-sans text-sm font-bold transition-all hover:bg-primary hover:text-white group shadow-sm bg-primary/5" href="tambah_transaksi.html">
+<span class="material-symbols-outlined mr-2 text-[18px]">add</span>
+                Tambah Transaksi
+            </a>
+</div>
+<a class="flex items-center px-4 py-3 text-slate-400 hover:bg-white/5 hover:text-white border-l-4 border-transparent font-sans text-sm font-semibold transition-all group" href="kategori.html">
+<span class="material-symbols-outlined mr-3">category</span>
+            Kategori
+        </a>
+<a class="flex items-center px-4 py-3 text-slate-400 hover:bg-white/5 hover:text-white border-l-4 border-transparent font-sans text-sm font-semibold transition-all group" href="pengaturan.html">
+<span class="material-symbols-outlined mr-3">settings</span>
+            Pengaturan
+        </a>
+<!-- Special Menu -->
+<div class="pt-6 pb-2">
+<a class="flex items-center px-4 py-3 text-slate-400 hover:text-white transition-all group cursor-pointer" onclick="openAiComingSoonModal(event)">
+<span class="material-symbols-outlined mr-3 text-slate-500">auto_awesome</span>
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-slate-400">✨ Tanya with AI</span>
+<span class="text-[9px] font-bold uppercase tracking-wider text-slate-500 leading-none mt-0.5">Coming Soon</span>
+</div>
+</a>
+</div>
+</nav>
+<!-- Bottom Section -->
+<div class="px-3">
+<div class="border-t border-white/5 mb-2 mx-3"></div>
+<a class="flex items-center px-4 py-3 text-slate-400 hover:bg-white/5 hover:text-white rounded-lg font-sans text-sm font-semibold transition-all" href="support.html">
+<span class="material-symbols-outlined mr-3">help</span>
+            Support
+        </a>
+<a class="flex items-center px-4 py-3 text-red-400 hover:bg-red-500/10 rounded-lg font-sans text-sm font-semibold transition-all" href="#" onclick="logout()">
+<span class="material-symbols-outlined mr-3 text-red-400">logout</span>
+            Logout
+        </a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-0 pt-24 pb-32 px-6 md:px-12 lg:px-20 min-h-screen bg-deep-blue w-full">
+<div class="w-full mx-auto space-y-gutter">
+<!-- Top Section: Greeting & Metrics -->
+<header class="mb-8">
+<h1 class="font-h2 text-h2 text-white mb-2"><span data-user-greeting>Halo!</span></h1>
+<p class="text-slate-400 font-body-md">Berikut ringkasan arus kasmu bulan ini.</p>
+</header>
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<!-- Card 1: Pemasukan -->
+<div class="bg-white/5 border border-white/10 pt-5 rounded-xl shadow-sm flex flex-col justify-between hover:bg-white/[0.07] transition-all relative overflow-hidden group">
+<div class="absolute right-0 top-0 opacity-5 group-hover:opacity-10 transition-opacity"><span class="material-symbols-outlined text-[100px] -mr-4 -mt-4">arrow_downward</span></div>
+<div class="flex justify-between items-start mb-4 px-5 relative z-10">
+<span class="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Pemasukan</span>
+<span class="material-symbols-outlined text-success text-xl">arrow_downward</span>
+</div>
+<div class="px-5 mb-5 relative z-10">
+<div class="text-2xl font-bold text-white" id="stat-pemasukan">Rp 0</div>
+</div>
+<!-- Full Footer Strip -->
+<div class="w-full px-5 py-2.5 bg-success/10 border-t border-success/20 flex items-center gap-1.5 text-[11px] text-success font-bold relative z-10 mt-auto">
+<span class="material-symbols-outlined text-[14px]">trending_up</span> 
+<span>Naik 5% bulan ini</span>
+</div>
+</div>
+<!-- Card 2: Batas Pengeluaran -->
+<div class="bg-white/5 border border-white/10 pt-5 rounded-xl shadow-sm flex flex-col justify-between hover:bg-white/[0.07] transition-all relative overflow-hidden group">
+<div class="absolute right-0 top-0 opacity-5 group-hover:opacity-10 transition-opacity"><span class="material-symbols-outlined text-[100px] -mr-4 -mt-4">track_changes</span></div>
+<div class="flex justify-between items-start mb-4 px-5 relative z-10">
+<span class="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Batas Pengeluaran</span>
+<span class="material-symbols-outlined text-slate-400 text-xl">track_changes</span>
+</div>
+<div class="px-5 mb-5 relative z-10">
+<div class="text-2xl font-bold text-white">Rp 4.500.000</div>
+</div>
+<!-- Full Footer Strip -->
+<div class="w-full px-5 py-2.5 bg-white/5 border-t border-white/10 flex items-center gap-1.5 text-[11px] text-slate-400 font-bold relative z-10 mt-auto">
+<span class="material-symbols-outlined text-[14px]">info</span> 
+<span>Tersisa Rp 1.150.000</span>
+</div>
+</div>
+<!-- Card 3: Total Pengeluaran -->
+<div class="bg-white/5 border border-white/10 pt-5 rounded-xl shadow-sm flex flex-col justify-between hover:bg-white/[0.07] transition-all relative overflow-hidden group">
+<div class="absolute right-0 top-0 opacity-5 group-hover:opacity-10 transition-opacity"><span class="material-symbols-outlined text-[100px] -mr-4 -mt-4">shopping_cart</span></div>
+<div class="flex justify-between items-start mb-4 px-5 relative z-10">
+<span class="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Total Pengeluaran</span>
+<span class="material-symbols-outlined text-warning text-xl">shopping_cart</span>
+</div>
+<div class="px-5 mb-5 relative z-10">
+<div class="text-2xl font-bold text-white" id="stat-pengeluaran">Rp 0</div>
+</div>
+<!-- Full Footer Strip -->
+<div class="w-full px-5 py-2.5 bg-warning/10 border-t border-warning/20 flex items-center gap-1.5 text-[11px] text-warning font-bold relative z-10 mt-auto">
+<span class="material-symbols-outlined text-[14px]">trending_down</span> 
+<span>Lebih hemat 12%</span>
+</div>
+</div>
+<!-- Card 4: Sisa Pengeluaran -->
+<div class="bg-primary/10 border border-primary/30 pt-5 rounded-xl shadow-[0_0_15px_rgba(0,240,255,0.1)] flex flex-col justify-between hover:bg-primary/20 transition-all relative overflow-hidden group">
+<div class="absolute right-0 top-0 opacity-10 group-hover:opacity-20 transition-opacity"><span class="material-symbols-outlined text-[100px] text-primary -mr-4 -mt-4">account_balance_wallet</span></div>
+<div class="flex justify-between items-start mb-4 px-5 relative z-10">
+<span class="text-[11px] font-bold text-primary uppercase tracking-widest">Sisa Pengeluaran</span>
+<span class="material-symbols-outlined text-primary text-xl">account_balance_wallet</span>
+</div>
+<div class="px-5 mb-5 relative z-10">
+<div class="text-2xl font-black text-primary drop-shadow-md" id="stat-saldo">Rp 0</div>
+</div>
+<!-- Full Footer Strip -->
+<div class="w-full px-5 py-2.5 bg-primary/20 border-t border-primary/30 flex items-center gap-1.5 text-[11px] text-primary font-bold relative z-10 mt-auto">
+<span class="material-symbols-outlined text-[14px]">check_circle</span> 
+<span>Aman (25% dari Batas)</span>
+</div>
+</div>
+</section>
+<!-- Middle Section: Analisis Status Keuangan -->
+<section class="bg-white/5 border border-white/10 p-8 rounded-xl shadow-sm">
+<h3 class="font-h3 text-white mb-8">Analisis Status Keuangan</h3>
+<div class="space-y-4">
+<div class="flex justify-between items-end">
+<p class="text-sm font-medium text-slate-300">75% dari Batas Pengeluaran telah terpakai.</p>
+<p class="text-xs font-bold text-slate-500 uppercase tracking-wider">Rp 3.350.000 / Rp 4.500.000</p>
+</div>
+<div class="w-full h-4 bg-slate-900 rounded-full overflow-hidden border border-white/5">
+<div class="h-full bg-primary rounded-full transition-all duration-1000" style="width: 75%;"></div>
+</div>
+<div class="mt-8 p-4 bg-yellow-500/10 border-l-4 border-yellow-500 rounded-r-lg">
+<div class="flex gap-3">
+<span class="material-symbols-outlined text-yellow-500">warning</span>
+<p class="text-sm text-slate-200 leading-relaxed font-bold">
+                            Pengeluaran Anda hampir melewati target aman. Tunda pengeluaran yang tidak mendesak.
+                        </p>
+</div>
+</div>
+</div>
+</section>
+<!-- Bottom Section: Insight Kategori -->
+<section class="grid grid-cols-1 lg:grid-cols-2 gap-gutter">
+<div class="bg-white/5 border border-white/10 p-8 rounded-xl shadow-sm">
+<h3 class="font-h3 text-white mb-8">Bocor Halus Terbesar Bulan Ini</h3>
+<div class="space-y-6">
+<!-- Category 1 -->
+<div class="space-y-2">
+<div class="flex justify-between text-sm">
+<span class="text-slate-300 font-medium">1. Operasional Usaha</span>
+<span class="text-primary font-bold">40%</span>
+</div>
+<div class="h-2 w-full bg-slate-900 rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 40%"></div>
+</div>
+</div>
+<!-- Category 2 -->
+<div class="space-y-2">
+<div class="flex justify-between text-sm">
+<span class="text-slate-300 font-medium">2. Makanan &amp; Minuman</span>
+<span class="text-primary font-bold">35%</span>
+</div>
+<div class="h-2 w-full bg-slate-900 rounded-full overflow-hidden">
+<div class="h-full bg-primary opacity-80" style="width: 35%"></div>
+</div>
+</div>
+<!-- Category 3 -->
+<div class="space-y-2">
+<div class="flex justify-between text-sm">
+<span class="text-slate-300 font-medium">3. Transportasi</span>
+<span class="text-primary font-bold">15%</span>
+</div>
+<div class="h-2 w-full bg-slate-900 rounded-full overflow-hidden">
+<div class="h-full bg-primary opacity-60" style="width: 15%"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- AI Insight Mini Card -->
+<div class="relative rounded-xl overflow-hidden shadow-xl border border-white/10">
+<img alt="Financial Analytics" class="w-full h-full object-cover opacity-40 absolute inset-0" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7H-BmioW8md9ZKOnYxcuUHGt9ifsMni0NzqdIIJB2NHfzOTAqrfug7IHvPOEL2TzIGttOZelXjJzIIIe0ja06Vbs-VoHOcnN19ruo8GqR6nbli1DyekTjZyz27RUXwjT9EkY7Z7aEXUqjMnb0nRMtkMuJbxYQKy7DbiEEIsAJc-78G5kBq0AFlTZtDVDx1cxMAOt3p4jac5lgopHRo-rlTs2K1XpG2fOXBAM0eMlenWXU_ccgAzhF9pZ5kB1CbTviENgFCFcMWF8"/>
+<div class="relative z-10 p-8 h-full bg-gradient-to-t from-deep-blue to-transparent flex flex-col justify-end">
+<div class="flex items-center gap-2 mb-3">
+<span class="material-symbols-outlined text-primary text-sm">auto_awesome</span>
+<span class="text-[10px] font-bold text-primary uppercase tracking-[0.2em]">Deep Intelligence</span>
+</div>
+<h4 class="font-h3 text-white mb-2">Analisis AI Terbaru</h4>
+<p class="font-body-md text-slate-300">Kami mendeteksi anomali pada pengeluaran operasional Anda minggu ini. Cek rincian transaksi untuk verifikasi.</p>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Copyright Footer (Static) -->
+<footer class="mt-12 text-center text-[10px] text-slate-500 font-bold uppercase tracking-[0.2em]">
+    © 2026 FINTRACK. Professional Financial Advisory.
+</footer>
+
+<!-- Calculation Floating Dock -->
+<div class="fixed bottom-8 left-1/2 -translate-x-1/2 w-[max-content] max-w-[90%] bg-[#0B1121]/80 backdrop-blur-xl border border-white/10 px-6 md:px-8 py-3.5 rounded-full z-40 shadow-[0_10px_40px_rgba(0,0,0,0.5)]">
+    <div class="flex items-center gap-4 md:gap-8">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-error/10 hidden md:flex items-center justify-center border border-error/20">
+                <span class="material-symbols-outlined text-error">shopping_cart</span>
+            </div>
+            <div class="flex flex-col">
+                <span class="text-[9px] md:text-[10px] text-slate-400 uppercase tracking-widest font-bold mb-0.5">Total Pengeluaran</span>
+                <span class="text-base md:text-lg font-black text-white" id="dock-pengeluaran">Rp 0</span>
+            </div>
+        </div>
+        
+        <div class="h-10 w-[1px] bg-white/10"></div>
+        
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-primary/10 hidden md:flex items-center justify-center border border-primary/20">
+                <span class="material-symbols-outlined text-primary">account_balance_wallet</span>
+            </div>
+            <div class="flex flex-col">
+                <span class="text-[9px] md:text-[10px] text-slate-400 uppercase tracking-widest font-bold mb-0.5">Sisa Saldo</span>
+                <span class="text-base md:text-lg font-black text-primary drop-shadow-md">Rp 2.450.000</span>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    // --- Auth & User UI ---
+    checkAuth();
+    populateUserUI();
+
+    // --- Load Dashboard Data ---
+    async function loadDashboard() {
+        const now = new Date();
+        const bulan = now.getMonth() + 1;
+        const tahun = now.getFullYear();
+
+        // Load summary
+        const summary = await apiFetch(`/transaksi/summary?bulan=${bulan}&tahun=${tahun}`);
+        if (summary && summary.status === 'success') {
+            const d = summary.data;
+            document.getElementById('stat-pemasukan').textContent = formatRupiah(d.total_pemasukan);
+            document.getElementById('stat-pengeluaran').textContent = formatRupiah(d.total_pengeluaran);
+            document.getElementById('stat-saldo').textContent = formatRupiah(d.saldo);
+            if (document.getElementById('dock-pengeluaran'))
+                document.getElementById('dock-pengeluaran').textContent = formatRupiah(d.total_pengeluaran);
+            // Update dock saldo
+            const dockSaldo = document.querySelector('#dock-saldo');
+            if (dockSaldo) dockSaldo.textContent = formatRupiah(d.saldo);
+        }
+    }
+
+    loadDashboard();
+    function toggleSidebar() {
+        document.getElementById('sidebar').classList.toggle('-translate-x-full');
+        document.getElementById('sidebar-overlay').classList.toggle('hidden');
+    }
+
+    // Toggle Profile Dropdown
+    function toggleProfileDropdown(event) {
+        event.stopPropagation();
+        const dropdown = document.getElementById('profile-dropdown');
+        if(dropdown.classList.contains('hidden')) {
+            dropdown.classList.remove('hidden');
+            dropdown.classList.add('flex');
+        } else {
+            dropdown.classList.add('hidden');
+            dropdown.classList.remove('flex');
+        }
+    }
+
+    // Toggle Notification Dropdown
+    function toggleNotificationDropdown(event) {
+        event.stopPropagation();
+        const notifDropdown = document.getElementById('notification-dropdown');
+        const profileDropdown = document.getElementById('profile-dropdown');
+        
+        // Close profile dropdown if open
+        if(profileDropdown && !profileDropdown.classList.contains('hidden')) {
+            profileDropdown.classList.add('hidden');
+            profileDropdown.classList.remove('flex');
+        }
+
+        if(notifDropdown.classList.contains('hidden')) {
+            notifDropdown.classList.remove('hidden');
+            notifDropdown.classList.add('flex');
+        } else {
+            notifDropdown.classList.add('hidden');
+            notifDropdown.classList.remove('flex');
+        }
+    }
+
+    // Close Dropdown when clicking outside
+    window.onclick = function(event) {
+        const profileDropdown = document.getElementById('profile-dropdown');
+        const notifDropdown = document.getElementById('notification-dropdown');
+
+        if (profileDropdown && !event.target.closest('#profile-dropdown') && !event.target.closest('[onclick="toggleProfileDropdown(event)"]') && !profileDropdown.classList.contains('hidden')) {
+            profileDropdown.classList.add('hidden');
+            profileDropdown.classList.remove('flex');
+        }
+
+        if (notifDropdown && !event.target.closest('#notification-dropdown') && !event.target.closest('[onclick="toggleNotificationDropdown(event)"]') && !notifDropdown.classList.contains('hidden')) {
+            notifDropdown.classList.add('hidden');
+            notifDropdown.classList.remove('flex');
+        }
+    }
+</script>
+</body>
+</html>

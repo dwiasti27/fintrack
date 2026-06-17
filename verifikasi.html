@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>FINTRACK - Verifikasi Email</title>
+    <meta name="description" content="FINTRACK adalah solusi cerdas untuk mengelola arus kas, mendeteksi kebocoran finansial, dan mencapai target keuangan dengan presisi tingkat institusi.">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="tailwind.config.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+
+</head>
+<body class="bg-background font-body-md text-on-background min-h-screen flex flex-col">
+
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-16 max-w-7xl mx-auto left-0 right-0 bg-white/90 backdrop-blur-md shadow-sm border-b border-slate-200">
+    <div class="text-xl font-bold tracking-tight text-slate-900 font-h2">FINTRACK</div>
+    <nav class="hidden md:flex gap-x-8">
+        <a class="font-body-md font-medium text-slate-600 hover:text-secondary transition-colors" href="Index.html">Beranda</a>
+        <a class="font-body-md font-medium text-slate-600 hover:text-secondary transition-colors" href="#">Fitur</a>
+    </nav>
+</header>
+
+<main class="flex-grow flex items-center justify-center pt-24 pb-12 px-4 relative overflow-hidden">
+    <div class="relative z-10 w-full max-w-[1100px] grid md:grid-cols-2 bg-surface-container-lowest rounded-xl shadow-xl overflow-hidden border border-outline-variant">
+        
+        <div class="p-8 md:p-12 flex flex-col justify-center order-2 md:order-1">
+            <div class="mb-8">
+                <div class="w-16 h-16 bg-primary-fixed rounded-full flex items-center justify-center mb-6 text-primary">
+                    <span class="material-symbols-outlined text-3xl">mark_email_read</span>
+                </div>
+                <h2 class="font-h2 text-on-surface mb-2">Verifikasi Email Anda</h2>
+                <p class="font-body-md text-on-surface-variant">Kami telah mengirimkan kode verifikasi 6 digit ke alamat email Anda. Masukkan kode tersebut di bawah ini untuk melanjutkan.</p>
+            </div>
+            
+            <form action="Login.html" method="GET" class="space-y-6">
+                <div class="space-y-2">
+                    <label for="otp" class="font-label-bold text-on-surface-variant block uppercase">Kode Verifikasi (OTP)</label>
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant">dialpad</span>
+                        <input id="otp" required maxlength="6" pattern="\d{6}" title="Masukkan 6 digit angka" class="w-full pl-10 pr-4 py-4 bg-white border border-slate-300 rounded-lg outline-none font-h2 tracking-[0.5em] text-center focus:border-secondary focus:ring-1 focus:ring-secondary transition-colors" placeholder="••••••" type="text" autocomplete="off">
+                    </div>
+                </div>
+                
+                <button type="submit" class="w-full py-4 bg-primary-container text-white font-label-bold rounded-lg shadow-md hover:opacity-90 active:scale-[0.98] transition-all flex justify-center items-center gap-2 text-center">
+                    Verifikasi Akun
+                    <span class="material-symbols-outlined">check_circle</span>
+                </button>
+            </form>
+
+            <div class="mt-8 text-center space-y-2">
+                <p class="font-body-md text-slate-600">Belum menerima email?</p>
+                <button onclick="alert('Kode verifikasi baru telah dikirim ulang ke email Anda.')" class="font-bold text-primary-container hover:underline bg-transparent border-none cursor-pointer">
+                    Kirim Ulang Kode
+                </button>
+            </div>
+        </div>
+
+        <div class="hidden md:block relative h-full min-h-[600px] order-1 md:order-2">
+            <img alt="Latar Belakang Keamanan" class="absolute inset-0 w-full h-full object-cover" src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80">
+            <div class="absolute inset-0 bg-primary-container/70 backdrop-blur-[1px] flex flex-col justify-end p-12 text-on-primary">
+                <h1 class="font-h1 text-white mb-4">Keamanan Setara Bank</h1>
+                <p class="font-body-lg text-slate-200">Setiap akses dan transaksi Anda dilindungi dengan enkripsi berlapis untuk menjamin keamanan aset digital Anda.</p>
+            </div>
+        </div>
+    </div>
+</main>
+
+</body>
+</html>
+
+

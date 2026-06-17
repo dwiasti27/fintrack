@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html class="light" lang="id">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>FINTRACK - Pengaturan & Tema</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="tailwind.config.js"></script>
+    <meta name="description" content="Pengaturan FINTRACK">
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700;900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Public Sans', sans-serif;
+        }
+    </style>
+    <script src="theme.js"></script>
+</head>
+<body class="bg-deep-blue text-on-background min-h-screen">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-40 flex justify-between items-center px-6 md:px-12 lg:px-20 h-16 bg-deep-blue/95 backdrop-blur-md border-b border-white/10 shadow-sm">
+    <div class="flex items-center gap-4">
+        <button class="text-white flex items-center" onclick="toggleSidebar()">
+            <span class="material-symbols-outlined">menu</span>
+        </button>
+        <div class="hidden md:flex gap-x-8 items-center">
+            <a class="font-sans antialiased text-sm font-semibold text-slate-400 hover:text-primary transition-colors" href="dashboard.html">Dashboard</a>
+            <a class="font-sans antialiased text-sm font-medium text-slate-400 hover:text-primary transition-colors" href="analitik.html">Analitik</a>
+        </div>
+    </div>
+    <div class="flex items-center gap-4">
+        <div class="relative">
+            <span class="material-symbols-outlined text-white cursor-pointer transition-colors" onclick="window.location.href='notifikasi.html'">notifications</span>
+        </div>
+        
+        <!-- Profile Area -->
+        <div class="relative flex items-center gap-3 pl-4 border-l border-white/10">
+            <div class="text-right hidden sm:block">
+                <p class="text-xs font-bold leading-none text-white">Mahasiswa IT</p>
+                <p class="text-[10px] text-slate-400 leading-none mt-1">Advisor Elite</p>
+            </div>
+            <div class="w-8 h-8 rounded-full bg-slate-800 border border-white/10 flex items-center justify-center text-white text-xs font-bold cursor-pointer hover:bg-white/10 transition" onclick="toggleProfileDropdown(event)">IT</div>
+            
+            <!-- Dropdown Menu -->
+            <div id="profile-dropdown" class="absolute top-full right-0 mt-4 w-56 bg-[#0B1121]/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl py-2 hidden flex-col z-50">
+                <div class="px-4 py-3 border-b border-white/5">
+                    <p class="text-sm font-bold text-white">Mahasiswa IT</p>
+                    <p class="text-xs text-slate-400 mt-0.5">user@fintrack.id</p>
+                </div>
+                <a href="profil.html" class="flex items-center px-4 py-2.5 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
+                    <span class="material-symbols-outlined text-[18px] mr-3">person</span> Lihat Profil
+                </a>
+                <a href="pengaturan.html" class="flex items-center px-4 py-2.5 text-sm text-primary bg-primary/10 transition-colors">
+                    <span class="material-symbols-outlined text-[18px] mr-3">settings</span> Pengaturan
+                </a>
+                <div class="border-t border-white/5 my-1"></div>
+                <a href="index.html" class="flex items-center px-4 py-2.5 text-sm text-error hover:bg-error/10 transition-colors">
+                    <span class="material-symbols-outlined text-[18px] mr-3">logout</span> Keluar
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Sidebar Overlay -->
+<div id="sidebar-overlay" class="fixed inset-0 bg-black/60 z-40 hidden backdrop-blur-sm transition-all duration-300" onclick="toggleSidebar()"></div>
+
+<!-- SideNavBar -->
+<aside id="sidebar" class="transform -translate-x-full transition-transform duration-300 fixed left-0 top-0 h-full w-[260px] bg-deep-blue flex flex-col py-6 z-50 border-r border-white/5">
+    <div class="px-6 mb-10 flex justify-between items-center">
+        <div class="text-2xl font-black tracking-tighter flex items-center gap-2">
+            <span class="text-white">FIN</span><span class="text-primary">TRACK</span>
+        </div>
+        <button class="text-slate-400 hover:text-white" onclick="toggleSidebar()">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+    </div>
+    <nav class="flex-1 px-3 space-y-1">
+        <a class="flex items-center px-4 py-3 text-slate-400 hover:bg-white/5 hover:text-white border-l-4 border-transparent font-sans text-sm font-semibold transition-all group" href="dashboard.html">
+            <span class="material-symbols-outlined mr-3">dashboard</span>Dashboard
+        </a>
+        <a class="flex items-center px-4 py-3 text-slate-400 hover:bg-white/5 hover:text-white border-l-4 border-transparent font-sans text-sm font-semibold transition-all group" href="transaksi.html">
+            <span class="material-symbols-outlined mr-3">receipt_long</span>Transaksi
+        </a>
+        <div class="px-4 pb-2">
+            <a class="flex items-center justify-center px-4 py-2 text-primary border border-primary/30 rounded-lg font-sans text-sm font-bold transition-all hover:bg-primary hover:text-white group shadow-sm bg-primary/5" href="tambah_transaksi.html">
+                <span class="material-symbols-outlined mr-2 text-[18px]">add</span>Tambah Transaksi
+            </a>
+        </div>
+        <a class="flex items-center px-4 py-3 text-slate-400 hover:bg-white/5 hover:text-white border-l-4 border-transparent font-sans text-sm font-semibold transition-all group" href="kategori.html">
+            <span class="material-symbols-outlined mr-3">category</span>Kategori
+        </a>
+        <a class="flex items-center px-4 py-3 text-primary bg-primary/10 border-l-4 border-primary font-sans text-sm font-semibold transition-all group" href="pengaturan.html">
+            <span class="material-symbols-outlined mr-3 text-primary">settings</span>Pengaturan
+        </a>
+        <!-- Special Menu -->
+        <div class="pt-6 pb-2">
+            <a class="flex items-center px-4 py-3 text-slate-400 hover:text-white transition-all group cursor-pointer" onclick="openAiComingSoonModal(event)">
+                <span class="material-symbols-outlined mr-3 text-slate-500">auto_awesome</span>
+                <div class="flex flex-col">
+                    <span class="text-sm font-semibold text-slate-400">✨ Tanya with AI</span>
+                    <span class="text-[9px] font-bold uppercase tracking-wider text-slate-500 leading-none mt-0.5">Coming Soon</span>
+                </div>
+            </a>
+        </div>
+    </nav>
+    <div class="px-3">
+        <div class="border-t border-white/5 mb-2 mx-3"></div>
+        <a class="flex items-center px-4 py-3 text-slate-400 hover:bg-white/5 hover:text-white rounded-lg font-sans text-sm font-semibold transition-all" href="support.html">
+            <span class="material-symbols-outlined mr-3">help</span>Support
+        </a>
+        <a class="flex items-center px-4 py-3 text-red-400 hover:bg-red-500/10 rounded-lg font-sans text-sm font-semibold transition-all" href="index.html">
+            <span class="material-symbols-outlined mr-3 text-red-400">logout</span>Logout
+        </a>
+    </div>
+</aside>
+
+<!-- Main Content Canvas -->
+<main class="ml-0 pt-24 pb-32 px-6 md:px-12 lg:px-20 min-h-screen w-full flex flex-col">
+    <div class="w-full max-w-6xl mx-auto space-y-8 flex-1">
+        
+        <!-- Header -->
+        <header class="flex flex-col mb-8">
+            <a href="javascript:history.back()" class="inline-flex items-center text-slate-400 hover:text-primary transition-colors text-sm font-bold mb-4 group w-max">
+                <span class="material-symbols-outlined text-[18px] mr-1 group-hover:-translate-x-1 transition-transform">arrow_back</span>
+                Kembali
+            </a>
+            <h1 class="font-h2 text-3xl font-bold text-white mb-2">Pengaturan Aplikasi</h1>
+            <p class="text-slate-400 font-body-md text-sm">Kelola preferensi akun, tampilan, notifikasi, dan keamanan data finansial Anda.</p>
+        </header>
+
+        <!-- Tab Navigation -->
+        <div class="flex flex-nowrap overflow-x-auto gap-2 border-b border-white/10 pb-4 mb-8 scrollbar-none">
+            <button onclick="switchTab('tab-tampilan')" id="btn-tab-tampilan" class="px-6 py-2.5 rounded-full text-sm font-bold bg-primary/10 text-primary transition-all whitespace-nowrap">
+                <span class="material-symbols-outlined text-[18px] align-text-bottom mr-1">palette</span> Tampilan & Tema
+            </button>
+            <button onclick="switchTab('tab-akun')" id="btn-tab-akun" class="px-6 py-2.5 rounded-full text-sm font-bold text-slate-400 hover:text-white hover:bg-white/5 transition-all whitespace-nowrap">
+                <span class="material-symbols-outlined text-[18px] align-text-bottom mr-1">manage_accounts</span> Akun & Preferensi
+            </button>
+            <button onclick="switchTab('tab-notifikasi')" id="btn-tab-notifikasi" class="px-6 py-2.5 rounded-full text-sm font-bold text-slate-400 hover:text-white hover:bg-white/5 transition-all whitespace-nowrap">
+                <span class="material-symbols-outlined text-[18px] align-text-bottom mr-1">notifications</span> Notifikasi
+            </button>
+            <button onclick="switchTab('tab-keamanan')" id="btn-tab-keamanan" class="px-6 py-2.5 rounded-full text-sm font-bold text-slate-400 hover:text-white hover:bg-white/5 transition-all whitespace-nowrap">
+                <span class="material-symbols-outlined text-[18px] align-text-bottom mr-1">security</span> Keamanan & Data
+            </button>
+        </div>
+
+        <!-- TAB CONTENT: TAMPILAN & TEMA -->
+        <div id="tab-tampilan" class="tab-content block animate-fade-in-up">
+
+        <!-- FREE THEMES SECTION -->
+        <section class="mb-12">
+            <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary">palette</span>
+                Tema Gratis
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                
+                <!-- Default Dark -->
+                <div class="bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-all flex flex-col justify-between group">
+                    <div>
+                        <div class="w-full h-24 rounded-xl bg-[#0A0B1A] border border-white/10 mb-4 flex items-center justify-center overflow-hidden">
+                            <div class="flex gap-2">
+                                <div class="w-8 h-8 rounded bg-[#00F0FF]"></div>
+                                <div class="w-8 h-8 rounded bg-[#1E293B]"></div>
+                                <div class="w-8 h-8 rounded bg-[#334155]"></div>
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-1">Default Dark</h3>
+                        <p class="text-xs text-slate-400 mb-4">Elegan, rapi, dan nyaman di mata untuk penggunaan malam hari.</p>
+                    </div>
+                    <button onclick="applyTheme('theme-dark')" class="w-full py-2.5 bg-primary/10 text-primary border border-primary/30 rounded-lg font-bold text-sm hover:bg-primary hover:text-deep-blue transition-all">
+                        Pakai Tema
+                    </button>
+                </div>
+
+                <!-- Clean Light -->
+                <div class="bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-all flex flex-col justify-between group">
+                    <div>
+                        <div class="w-full h-24 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] mb-4 flex items-center justify-center overflow-hidden">
+                            <div class="flex gap-2">
+                                <div class="w-8 h-8 rounded bg-[#0284C7]"></div>
+                                <div class="w-8 h-8 rounded bg-[#F1F5F9]"></div>
+                                <div class="w-8 h-8 rounded bg-[#FFFFFF]"></div>
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-1">Clean Light</h3>
+                        <p class="text-xs text-slate-400 mb-4">Terang, profesional, dan fokus pada data. Cocok untuk lingkungan kantor.</p>
+                    </div>
+                    <button onclick="applyTheme('theme-light')" class="w-full py-2.5 bg-primary/10 text-primary border border-primary/30 rounded-lg font-bold text-sm hover:bg-primary hover:text-deep-blue transition-all">
+                        Pakai Tema
+                    </button>
+                </div>
+
+                <!-- Neon Pink -->
+                <div class="bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-all flex flex-col justify-between group">
+                    <div>
+                        <div class="w-full h-24 rounded-xl bg-[#0A0B1A] border border-[#FF00FF]/30 mb-4 flex items-center justify-center overflow-hidden">
+                            <div class="flex gap-2">
+                                <div class="w-8 h-8 rounded bg-[#FF00FF] shadow-[0_0_15px_rgba(255,0,255,0.5)]"></div>
+                                <div class="w-8 h-8 rounded bg-[#1E293B]"></div>
+                                <div class="w-8 h-8 rounded bg-[#334155]"></div>
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-1">Neon Pink</h3>
+                        <p class="text-xs text-slate-400 mb-4">Gelap dengan aksen pink neon yang menyala dan futuristik.</p>
+                    </div>
+                    <button onclick="applyTheme('theme-neon')" class="w-full py-2.5 bg-primary/10 text-primary border border-primary/30 rounded-lg font-bold text-sm hover:bg-primary hover:text-deep-blue transition-all">
+                        Pakai Tema
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- PREMIUM THEMES SECTION -->
+        <section>
+            <h2 class="text-xl font-bold text-warning mb-6 flex items-center gap-2">
+                <span class="material-symbols-outlined text-warning">workspace_premium</span>
+                Tema Premium (Berkarakter)
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- THEME CAKE -->
+                <div class="bg-gradient-to-br from-[#FFF0F5] to-[#FFE4E1] border-2 border-[#FFB6C1] rounded-3xl p-6 hover:shadow-[0_10px_30px_rgba(255,182,193,0.4)] transition-all flex flex-col justify-between relative overflow-hidden group">
+                    <!-- Ribbon -->
+                    <div class="absolute -right-8 top-4 bg-warning text-deep-blue text-[10px] font-black uppercase tracking-widest py-1 px-10 transform rotate-45 shadow-lg z-10">
+                        BEST SELLER
+                    </div>
+                    
+                    <div>
+                        <div class="w-full h-32 rounded-2xl bg-white/60 backdrop-blur-sm border-2 border-dashed border-[#FFC0CB] mb-4 flex flex-col items-center justify-center relative overflow-hidden">
+                            <!-- Cake Illustration Concept -->
+                            <span class="material-symbols-outlined text-[#FF69B4] text-5xl mb-2">cake</span>
+                            <div class="flex gap-2">
+                                <div class="w-10 h-4 rounded-full bg-[#FF69B4]"></div>
+                                <div class="w-6 h-4 rounded-full bg-[#FFC0CB]"></div>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-black text-[#FF1493] mb-1">Theme Cake 🍰</h3>
+                        <p class="text-sm text-[#8B5A2B] font-medium mb-2">Ubah aplikasi Anda menjadi toko kue yang manis!</p>
+                        <p class="text-xs text-[#A0522D] mb-4 leading-relaxed">Merombak warna menjadi pastel, mengubah semua tombol menjadi membundar (pill-shaped), dan memberikan latar belakang polkadot ceria.</p>
+                    </div>
+                    
+                    <div class="flex items-center justify-between mt-auto pt-4 border-t border-[#FFC0CB]/50">
+                        <span class="font-black text-lg text-[#FF1493]">Rp 49.000</span>
+                        <!-- Simulasi Pakai Tema -->
+                        <button onclick="applyTheme('theme-cake')" class="px-6 py-3 bg-[#FF69B4] text-white rounded-full font-black text-sm hover:bg-[#FF1493] transition-all shadow-[0_4px_15px_rgba(255,105,180,0.4)]">
+                            Uji Coba Tema
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        </div> <!-- End of Tab Tampilan -->
+
+        <!-- TAB CONTENT: AKUN & PREFERENSI -->
+        <div id="tab-akun" class="tab-content hidden animate-fade-in-up">
+            <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary">manage_accounts</span> Preferensi Utama
+            </h2>
+            <div class="bg-white/5 border border-white/10 rounded-2xl p-6 md:p-8 space-y-6">
+                <!-- Mata Uang -->
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/5 pb-6">
+                    <div>
+                        <h3 class="text-base font-bold text-white">Mata Uang Utama</h3>
+                        <p class="text-xs text-slate-400 mt-1">Pilih mata uang default untuk seluruh dasbor dan laporan Anda.</p>
+                    </div>
+                    <select class="px-4 py-2 bg-slate-900 border border-white/10 rounded-lg outline-none text-white focus:border-primary text-sm min-w-[150px]">
+                        <option value="IDR">Rupiah (IDR)</option>
+                        <option value="USD">US Dollar (USD)</option>
+                        <option value="EUR">Euro (EUR)</option>
+                    </select>
+                </div>
+                <!-- Format Tanggal -->
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/5 pb-6">
+                    <div>
+                        <h3 class="text-base font-bold text-white">Format Tanggal</h3>
+                        <p class="text-xs text-slate-400 mt-1">Bagaimana Anda ingin tanggal ditampilkan di tabel dan laporan?</p>
+                    </div>
+                    <select class="px-4 py-2 bg-slate-900 border border-white/10 rounded-lg outline-none text-white focus:border-primary text-sm min-w-[150px]">
+                        <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                        <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                        <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                    </select>
+                </div>
+                <!-- Navigasi Profil -->
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pt-2">
+                    <div>
+                        <h3 class="text-base font-bold text-white">Data Diri & Profil</h3>
+                        <p class="text-xs text-slate-400 mt-1">Ubah nama, avatar, dan informasi personal Anda.</p>
+                    </div>
+                    <a href="profil.html" class="px-6 py-2 bg-primary/10 text-primary border border-primary/30 rounded-lg font-bold text-sm hover:bg-primary hover:text-white transition-all text-center">
+                        Edit Profil
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB CONTENT: NOTIFIKASI -->
+        <div id="tab-notifikasi" class="tab-content hidden animate-fade-in-up">
+            <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary">notifications_active</span> Aturan Pemberitahuan
+            </h2>
+            <div class="bg-white/5 border border-white/10 rounded-2xl p-6 md:p-8 space-y-6">
+                <!-- Peringatan Anggaran -->
+                <div class="flex items-center justify-between gap-4 border-b border-white/5 pb-6">
+                    <div class="flex-1">
+                        <h3 class="text-base font-bold text-white">Peringatan Anggaran (Budget Alert)</h3>
+                        <p class="text-xs text-slate-400 mt-1">Terima notifikasi instan jika pengeluaran Anda menyentuh 80% dari batas bulanan.</p>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer shrink-0">
+                        <input type="checkbox" class="sr-only peer" checked>
+                        <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                    </label>
+                </div>
+                <!-- Laporan Mingguan -->
+                <div class="flex items-center justify-between gap-4 border-b border-white/5 pb-6">
+                    <div class="flex-1">
+                        <h3 class="text-base font-bold text-white">Laporan Keuangan Mingguan</h3>
+                        <p class="text-xs text-slate-400 mt-1">Kirim ringkasan transaksi mingguan ke email saya (user@fintrack.id).</p>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer shrink-0">
+                        <input type="checkbox" class="sr-only peer">
+                        <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                    </label>
+                </div>
+                <!-- Tips AI -->
+                <div class="flex items-center justify-between gap-4 pt-2">
+                    <div class="flex-1">
+                        <h3 class="text-base font-bold text-white flex items-center gap-2">Tips Hemat AI <span class="px-2 py-0.5 bg-primary/20 text-primary text-[10px] rounded-full">BETA</span></h3>
+                        <p class="text-xs text-slate-400 mt-1">Biarkan AI kami menganalisa dan mengirimkan notifikasi saran penghematan.</p>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer shrink-0">
+                        <input type="checkbox" class="sr-only peer" checked>
+                        <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB CONTENT: KEAMANAN -->
+        <div id="tab-keamanan" class="tab-content hidden animate-fade-in-up">
+            <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary">lock</span> Keamanan & Data
+            </h2>
+            
+            <div class="space-y-6">
+                <!-- Keamanan Akses -->
+                <div class="bg-white/5 border border-white/10 rounded-2xl p-6 md:p-8 space-y-6">
+                    <h3 class="text-sm font-black text-slate-400 uppercase tracking-widest border-b border-white/5 pb-2">Akses Aplikasi</h3>
+                    
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div>
+                            <h3 class="text-base font-bold text-white">Ubah Kata Sandi</h3>
+                            <p class="text-xs text-slate-400 mt-1">Perbarui kata sandi Anda untuk menjaga keamanan akun.</p>
+                        </div>
+                        <button class="px-6 py-2 bg-slate-800 text-white border border-white/10 rounded-lg font-bold text-sm hover:bg-slate-700 transition-all">
+                            Ganti Sandi
+                        </button>
+                    </div>
+                    
+                    <div class="flex items-center justify-between gap-4 pt-4 border-t border-white/5">
+                        <div class="flex-1">
+                            <h3 class="text-base font-bold text-white">Kunci Aplikasi (Biometrik/PIN)</h3>
+                            <p class="text-xs text-slate-400 mt-1">Minta Face ID, Sidik Jari, atau PIN setiap kali membuka aplikasi.</p>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer shrink-0">
+                            <input type="checkbox" class="sr-only peer">
+                            <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Danger Zone -->
+                <div class="bg-error/5 border border-error/20 rounded-2xl p-6 md:p-8 space-y-6">
+                    <h3 class="text-sm font-black text-error uppercase tracking-widest border-b border-error/20 pb-2">Zona Berbahaya (Danger Zone)</h3>
+                    
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div>
+                            <h3 class="text-base font-bold text-white">Ekspor Semua Data</h3>
+                            <p class="text-xs text-slate-400 mt-1">Unduh seluruh data transaksi Anda dalam format CSV.</p>
+                        </div>
+                        <button class="px-6 py-2 bg-white/5 text-white border border-white/10 rounded-lg font-bold text-sm hover:bg-white/10 transition-all flex items-center justify-center gap-2">
+                            <span class="material-symbols-outlined text-[18px]">download</span> Ekspor
+                        </button>
+                    </div>
+                    
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pt-4 border-t border-error/10">
+                        <div>
+                            <h3 class="text-base font-bold text-error">Hapus Seluruh Data Transaksi</h3>
+                            <p class="text-xs text-slate-400 mt-1">Menghapus semua catatan tanpa bisa dikembalikan. Akun tetap ada.</p>
+                        </div>
+                        <button onclick="confirmReset()" class="px-6 py-2 bg-error text-white rounded-lg font-bold text-sm hover:opacity-90 shadow-lg shadow-error/20 transition-all flex items-center justify-center gap-2">
+                            <span class="material-symbols-outlined text-[18px]">delete_forever</span> Hapus Data
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    
+    <!-- Footer -->
+    <footer class="mt-12 text-center text-[10px] text-slate-500 font-bold uppercase tracking-[0.2em] w-full pb-6">
+        © 2026 FINTRACK. Professional Financial Advisory.
+    </footer>
+</main>
+
+<script>
+    function toggleSidebar() {
+        document.getElementById('sidebar').classList.toggle('-translate-x-full');
+        document.getElementById('sidebar-overlay').classList.toggle('hidden');
+    }
+
+    // Toggle Profile Dropdown
+    function toggleProfileDropdown(event) {
+        event.stopPropagation();
+        const dropdown = document.getElementById('profile-dropdown');
+        if(dropdown.classList.contains('hidden')) {
+            dropdown.classList.remove('hidden');
+            dropdown.classList.add('flex');
+        } else {
+            dropdown.classList.add('hidden');
+            dropdown.classList.remove('flex');
+        }
+    }
+
+    // Close Dropdown when clicking outside
+    window.onclick = function(event) {
+        const profileDropdown = document.getElementById('profile-dropdown');
+        if (profileDropdown && !event.target.closest('#profile-dropdown') && !event.target.closest('[onclick="toggleProfileDropdown(event)"]') && !profileDropdown.classList.contains('hidden')) {
+            profileDropdown.classList.add('hidden');
+            profileDropdown.classList.remove('flex');
+        }
+    }
+    // Tab Switching Logic
+    function switchTab(tabId) {
+        // 1. Hide all tab contents
+        const contents = document.querySelectorAll('.tab-content');
+        contents.forEach(el => {
+            el.classList.remove('block');
+            el.classList.add('hidden');
+        });
+        
+        // 2. Reset all tab buttons styling
+        const buttons = [
+            document.getElementById('btn-tab-tampilan'),
+            document.getElementById('btn-tab-akun'),
+            document.getElementById('btn-tab-notifikasi'),
+            document.getElementById('btn-tab-keamanan')
+        ];
+        
+        buttons.forEach(btn => {
+            // Reset to inactive state
+            btn.className = "px-6 py-2.5 rounded-full text-sm font-bold text-slate-400 hover:text-white hover:bg-white/5 transition-all whitespace-nowrap";
+        });
+        
+        // 3. Show selected tab content
+        const activeContent = document.getElementById(tabId);
+        if(activeContent) {
+            activeContent.classList.remove('hidden');
+            activeContent.classList.add('block');
+        }
+        
+        // 4. Highlight active button
+        const activeBtn = document.getElementById('btn-' + tabId);
+        if(activeBtn) {
+            activeBtn.className = "px-6 py-2.5 rounded-full text-sm font-bold bg-primary/10 text-primary transition-all whitespace-nowrap";
+        }
+    }
+
+    // Modal Confirmation Simulation
+    function confirmReset() {
+        if(confirm("PERINGATAN! Anda akan menghapus SELURUH data transaksi. Tindakan ini tidak dapat dibatalkan. Lanjutkan?")) {
+            alert("Data transaksi berhasil dihapus (Simulasi).");
+        }
+    }
+</script>
+</body>
+</html>

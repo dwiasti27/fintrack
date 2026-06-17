@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>FINTRACK - Masuk Akun</title>
+    <meta name="description" content="FINTRACK adalah solusi cerdas untuk mengelola arus kas, mendeteksi kebocoran finansial, dan mencapai target keuangan dengan presisi tingkat institusi.">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="tailwind.config.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700;900&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+
+</head>
+<body class="bg-background font-body-md text-on-background min-h-screen flex flex-col">
+
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-16 max-w-7xl mx-auto left-0 right-0 bg-white/90 backdrop-blur-md shadow-sm border-b border-slate-200">
+    <div class="text-xl font-bold tracking-tight text-slate-900 font-h2">FINTRACK</div>
+    <nav class="hidden md:flex gap-x-8">
+        <a class="font-body-md font-medium text-slate-600 hover:text-secondary transition-colors" href="index.html">Beranda</a>
+        <a class="font-body-md font-medium text-slate-600 hover:text-secondary transition-colors" href="#">Fitur</a>
+    </nav>
+</header>
+
+<main class="flex-grow flex items-center justify-center pt-24 pb-12 px-4 relative overflow-hidden">
+    <div class="relative z-10 w-full max-w-[1100px] grid md:grid-cols-2 bg-surface-container-lowest rounded-xl shadow-xl overflow-hidden border border-outline-variant">
+        <div class="hidden md:block relative h-full min-h-[600px]">
+            <img alt="" class="absolute inset-0 w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3wwUiWYiw4cmmkAOwT0krY5BR7aou7IS7Ge1rUIE_oTGbl9QfYNEM9lSyU6O4S9C7t8ZbtSh5cg1uiMzBXOzt6E_l_m1Ul5sE_U3T5SPBhWE4bO7vm3kxHP1lNeXEiGwZ7FU3_1Lg5FXvOHGEXt_-pvfEbE4uD4m8yGJQ0lb2x4M3irF2jgOc_s3KpE-_3bjpN4G1EtyK3B0UZfq8eSNn1juFDLu_QB7oGs9h-bcYicBJuk-_sEYiLjSZL_n4Gcxvjsew9h4KVFY">
+            <div class="absolute inset-0 bg-primary-container/60 backdrop-blur-[2px] flex flex-col justify-end p-12 text-on-primary">
+                <h1 class="font-h1 text-white mb-4">Akses Terminal Penasihat Anda</h1>
+                <p class="font-body-lg text-slate-200">Kelola aset dan analisis data pasar dengan presisi kelas institusi dalam satu platform yang terintegrasi.</p>
+            </div>
+        </div>
+        
+        <div class="p-8 md:p-12 flex flex-col justify-center">
+            <div class="mb-10">
+                <h2 class="font-h2 text-on-surface mb-2">Selamat Datang</h2>
+                <p class="font-body-md text-on-surface-variant">Silakan masuk ke akun FINTRACK Anda untuk melanjutkan analisis.</p>
+            </div>
+            
+            <!-- Error Alert -->
+            <div id="alert-error" class="hidden mb-4 flex items-center gap-3 px-4 py-3 bg-red-50 border border-red-200 text-red-700 rounded-lg text-sm font-medium">
+                <span class="material-symbols-outlined text-[18px]">error</span>
+                <span id="alert-error-msg">Terjadi kesalahan.</span>
+            </div>
+
+            <form id="login-form" class="space-y-6">
+                <div class="space-y-2">
+                    <label for="email" class="font-label-bold text-on-surface-variant block uppercase">Alamat Email</label>
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant">mail</span>
+                        <input id="email" required class="w-full pl-10 pr-4 py-3 bg-white border border-slate-300 rounded-lg outline-none font-body-md focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors" placeholder="nama@perusahaan.com" type="email">
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <label for="password" class="font-label-bold text-on-surface-variant block uppercase">Kata Sandi</label>
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant">lock</span>
+                        <input id="password" required class="w-full pl-10 pr-10 py-3 bg-white border border-slate-300 rounded-lg outline-none font-body-md focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors" type="password">
+                    </div>
+                </div>
+                
+                <!-- TOMBOL SUBMIT -->
+                <button type="submit" id="login-btn" class="w-full py-4 bg-primary-container text-white font-label-bold rounded-lg shadow-md hover:opacity-90 active:scale-[0.98] transition-all flex justify-center items-center gap-2 text-center">
+                    <span id="login-btn-text">Masuk ke Akun</span>
+                    <span id="login-btn-icon" class="material-symbols-outlined">arrow_forward</span>
+                    <svg id="login-spinner" class="hidden animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 22 6.477 22 12h-4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.961 3 8.291l3-2.245z"></path>
+                    </svg>
+                </button>
+            </form>
+            
+            <div class="mt-6 text-center">
+                <p class="font-body-md text-slate-600">
+                    Belum punya akun? 
+                    <a href="register.html" class="font-bold text-primary-container hover:underline">Daftar sekarang</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+    const API_URL = 'http://localhost:5000/api';
+
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value;
+        const btn = document.getElementById('login-btn');
+        const btnText = document.getElementById('login-btn-text');
+        const btnIcon = document.getElementById('login-btn-icon');
+        const spinner = document.getElementById('login-spinner');
+        const alertErr = document.getElementById('alert-error');
+        const alertErrMsg = document.getElementById('alert-error-msg');
+
+        // Reset state
+        alertErr.classList.add('hidden');
+        btn.disabled = true;
+        btnText.textContent = 'Memproses...';
+        btnIcon.classList.add('hidden');
+        spinner.classList.remove('hidden');
+
+        try {
+            const response = await fetch(`${API_URL}/auth/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || 'Login gagal.');
+            }
+
+            // Save token and user data
+            localStorage.setItem('fintrack_token', data.token);
+            localStorage.setItem('fintrack_user', JSON.stringify(data.user));
+
+            // Redirect to dashboard
+            btnText.textContent = 'Berhasil! Mengalihkan...';
+            setTimeout(() => { window.location.href = 'dashboard.html'; }, 500);
+
+        } catch (error) {
+            alertErrMsg.textContent = error.message;
+            alertErr.classList.remove('hidden');
+            btn.disabled = false;
+            btnText.textContent = 'Masuk ke Akun';
+            btnIcon.classList.remove('hidden');
+            spinner.classList.add('hidden');
+        }
+    });
+</script>
+
+</body>
+</html>
+

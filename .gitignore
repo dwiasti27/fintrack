@@ -1,0 +1,27 @@
+# ─── Node.js ───────────────────────────────────────────
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ─── Environment & Secrets ─────────────────────────────
+.env
+.env.local
+.env.production
+backend/.env
+backend/.env.local
+
+# ─── Server Logs ───────────────────────────────────────
+backend/logs/
+*.log
+
+# ─── OS & Editor ───────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# ─── Build output ──────────────────────────────────────
+dist/
+build/

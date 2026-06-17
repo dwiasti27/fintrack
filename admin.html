@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel — FINTRACK Command Center</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <script src="tailwind.config.js"></script>
+    <script src="js/auth.js"></script>
+    <style>
+        body { font-family: 'Public Sans', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+
+        /* Admin accent — gold/amber */
+        .admin-accent { color: #F59E0B; }
+        .admin-badge { background: #F59E0B22; border: 1px solid #F59E0B44; color: #F59E0B; }
+
+        @keyframes slideUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+        .slide-up { animation: slideUp 0.35s ease forwards; }
+
+        /* Tab styles */
+        .tab-btn { transition: all 0.2s; }
+        .tab-btn.active { background: rgba(245,158,11,0.15); color: #F59E0B; border-color: rgba(245,158,11,0.4); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* Log lines */
+        .log-line:hover { background: rgba(255,255,255,0.03); }
+
+        /* Stat card glow */
+        .stat-card { transition: transform 0.2s; }
+        .stat-card:hover { transform: translateY(-2px); }
+
+        /* scrollbar */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-[#080E1A] text-white min-h-screen">
+
+<!-- Top Admin Bar -->
+<nav class="fixed top-0 w-full z-40 h-16 bg-[#080E1A]/95 backdrop-blur-md border-b border-amber-500/20 flex items-center justify-between px-6 md:px-10">
+    <div class="flex items-center gap-4">
+        <div class="text-xl font-black tracking-tighter flex items-center gap-2">
+            <span class="text-white">FIN</span><span class="text-[#F59E0B]">TRACK</span>
+            <span class="ml-2 text-[10px] font-black uppercase tracking-[0.2em] admin-badge px-2.5 py-1 rounded-full">ADMIN</span>
+        </div>
+    </div>
+    <div class="flex items-center gap-4">
+        <div class="flex items-center gap-2 px-3 py-1.5 bg-amber-500/10 border border-amber-500/30 rounded-full">
+            <span class="w-2 h-2 bg-amber-400 rounded-full animate-pulse"></span>
+            <span class="text-xs font-bold text-amber-400 hidden sm:block">Server Online</span>
+        </div>
+        <div class="text-right hidden sm:block">
+            <p class="text-xs font-bold text-white leading-none" data-user-name>Admin</p>
+            <p class="text-[10px] text-amber-400/70 leading-none mt-1">Command Center</p>
+        </div>
+        <div class="w-9 h-9 rounded-full bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 text-xs font-black" data-user-initials>AD</div>
+        <a href="dashboard.html" title="Kembali ke Dashboard" class="w-9 h-9 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-slate-400 hover:text-white transition-colors ml-2">
+            <span class="material-symbols-outlined text-[18px]">exit_to_app</span>
+        </a>
+    </div>
+</nav>
+
+<main class="pt-24 pb-20 px-6 md:px-10 lg:px-16 min-h-screen">
+    <div class="max-w-7xl mx-auto">
+
+        <!-- Header -->
+        <div class="mb-8 slide-up">
+            <h1 class="text-3xl font-black text-white mb-1">Command Center</h1>
+            <p class="text-slate-400 text-sm">Kendali penuh atas platform FINTRACK — Monitor, Kelola, & Broadcast.</p>
+        </div>
+
+        <!-- Stat Cards -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            <div class="stat-card bg-white/[0.03] border border-white/10 rounded-2xl p-5">
+                <div class="flex items-center gap-3 mb-3">
+                    <div class="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center"><span class="material-symbols-outlined text-blue-400">people</span></div>
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Total User</span>
+                </div>
+                <p id="stat-users" class="text-3xl font-black text-white">-</p>
+            </div>
+            <div class="stat-card bg-white/[0.03] border border-white/10 rounded-2xl p-5">
+                <div class="flex items-center gap-3 mb-3">
+                    <div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center"><span class="material-symbols-outlined text-primary">receipt_long</span></div>
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Transaksi</span>
+                </div>
+                <p id="stat-tx" class="text-3xl font-black text-white">-</p>
+            </div>
+            <div class="stat-card bg-white/[0.03] border border-white/10 rounded-2xl p-5">
+                <div class="flex items-center gap-3 mb-3">
+                    <div class="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center"><span class="material-symbols-outlined text-amber-400">payments</span></div>
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Volume Dana</span>
+                </div>
+                <p id="stat-volume" class="text-2xl font-black text-white">-</p>
+            </div>
+            <div class="stat-card bg-white/[0.03] border border-white/10 rounded-2xl p-5">
+                <div class="flex items-center gap-3 mb-3">
+                    <div class="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center"><span class="material-symbols-outlined text-purple-400">notifications</span></div>
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Notifikasi</span>
+                </div>
+                <p id="stat-notif" class="text-3xl font-black text-white">-</p>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="flex flex-wrap gap-2 mb-6">
+            <button onclick="switchTab('users')" class="tab-btn active flex items-center gap-2 px-5 py-2.5 rounded-xl border border-white/10 text-sm font-bold text-slate-300" id="tab-users-btn">
+                <span class="material-symbols-outlined text-[18px]">manage_accounts</span>Kelola Pengguna
+            </button>
+            <button onclick="switchTab('broadcast')" class="tab-btn flex items-center gap-2 px-5 py-2.5 rounded-xl border border-white/10 text-sm font-bold text-slate-300" id="tab-broadcast-btn">
+                <span class="material-symbols-outlined text-[18px]">campaign</span>Kirim Notifikasi
+            </button>
+            <button onclick="switchTab('logs')" class="tab-btn flex items-center gap-2 px-5 py-2.5 rounded-xl border border-white/10 text-sm font-bold text-slate-300" id="tab-logs-btn">
+                <span class="material-symbols-outlined text-[18px]">terminal</span>Access Logs
+            </button>
+        </div>
+
+        <!-- TAB: Kelola Pengguna -->
+        <div id="tab-users" class="tab-content active">
+            <div class="bg-white/[0.03] border border-white/10 rounded-2xl overflow-hidden">
+                <div class="flex items-center justify-between px-6 py-4 border-b border-white/10">
+                    <h3 class="text-base font-bold text-white flex items-center gap-2">
+                        <span class="material-symbols-outlined text-[20px] text-blue-400">group</span>
+                        Daftar Pengguna Terdaftar
+                    </h3>
+                    <button onclick="loadUsers()" class="text-xs font-bold text-slate-400 hover:text-white flex items-center gap-1 transition-colors">
+                        <span class="material-symbols-outlined text-[16px]">refresh</span>Refresh
+                    </button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left">
+                        <thead>
+                            <tr class="bg-slate-900/50 text-[11px] text-slate-400 uppercase tracking-widest border-b border-white/5">
+                                <th class="px-6 py-3">ID</th>
+                                <th class="px-6 py-3">Nama</th>
+                                <th class="px-6 py-3">Email</th>
+                                <th class="px-6 py-3">Transaksi</th>
+                                <th class="px-6 py-3">Pemasukan</th>
+                                <th class="px-6 py-3">Pengeluaran</th>
+                                <th class="px-6 py-3">Bergabung</th>
+                                <th class="px-6 py-3">Role</th>
+                                <th class="px-6 py-3 text-right">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="users-tbody" class="divide-y divide-white/5">
+                            <tr><td colspan="9" class="px-6 py-10 text-center text-slate-500"><span class="material-symbols-outlined animate-spin">autorenew</span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB: Broadcast Notifikasi -->
+        <div id="tab-broadcast" class="tab-content">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Form Broadcast -->
+                <div class="bg-white/[0.03] border border-white/10 rounded-2xl p-6">
+                    <h3 class="text-base font-bold text-white mb-5 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-amber-400">campaign</span>Kirim Pesan / Penawaran
+                    </h3>
+                    <form id="form-broadcast" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Target Penerima</label>
+                            <select id="bc-target" class="w-full px-4 py-3 bg-slate-900 border border-white/10 rounded-xl text-white text-sm outline-none focus:border-amber-400 transition-all">
+                                <option value="all">📢 Semua Pengguna (Broadcast)</option>
+                                <!-- Populated dynamically -->
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Judul Notifikasi</label>
+                            <input id="bc-judul" type="text" placeholder="Contoh: Promo Spesial Akhir Bulan 🎉" required
+                                class="w-full px-4 py-3 bg-slate-900 border border-white/10 rounded-xl text-white text-sm outline-none focus:border-amber-400 transition-all placeholder:text-slate-600">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Isi Pesan</label>
+                            <textarea id="bc-pesan" rows="5" placeholder="Tulis isi pesan atau penawaran di sini..." required
+                                class="w-full px-4 py-3 bg-slate-900 border border-white/10 rounded-xl text-white text-sm outline-none focus:border-amber-400 transition-all resize-none placeholder:text-slate-600"></textarea>
+                        </div>
+                        <div id="bc-alert" class="hidden"></div>
+                        <button type="submit" id="btn-broadcast" class="w-full py-3 bg-amber-500 hover:bg-amber-400 text-black font-black rounded-xl text-sm transition-all flex items-center justify-center gap-2">
+                            <span class="material-symbols-outlined text-[18px]">send</span>
+                            <span id="btn-bc-text">Kirim Notifikasi</span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Preview & History Panel -->
+                <div class="bg-white/[0.03] border border-white/10 rounded-2xl p-6 flex flex-col gap-4">
+                    <h3 class="text-base font-bold text-white flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">preview</span>Preview Notifikasi
+                    </h3>
+                    <div class="flex-1 bg-slate-900/50 border border-white/5 rounded-xl p-5">
+                        <div class="flex items-start gap-3 mb-3">
+                            <div class="w-8 h-8 rounded-full bg-amber-500/20 flex items-center justify-center flex-shrink-0">
+                                <span class="material-symbols-outlined text-amber-400 text-[16px]">notifications</span>
+                            </div>
+                            <div>
+                                <p id="preview-judul" class="text-sm font-bold text-white">Judul notifikasi...</p>
+                                <p id="preview-pesan" class="text-xs text-slate-400 mt-1 leading-relaxed">Isi pesan akan muncul di sini...</p>
+                            </div>
+                        </div>
+                        <p class="text-[10px] text-slate-600 ml-11">Baru saja • Dari Admin FINTRACK</p>
+                    </div>
+                    <div class="bg-amber-500/5 border border-amber-500/20 rounded-xl p-4 text-xs text-amber-400/80 leading-relaxed">
+                        <span class="material-symbols-outlined text-[14px] align-middle mr-1">info</span>
+                        Pesan ini akan muncul di <strong>lonceng notifikasi</strong> setiap pengguna yang dipilih secara real-time.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB: Access Logs -->
+        <div id="tab-logs" class="tab-content">
+            <div class="bg-[#080E1A] border border-white/10 rounded-2xl overflow-hidden">
+                <div class="flex items-center justify-between px-6 py-4 border-b border-white/10 bg-slate-900/30">
+                    <h3 class="text-base font-bold text-white flex items-center gap-2">
+                        <span class="material-symbols-outlined text-[20px] text-green-400">terminal</span>
+                        Server Access Log <span class="text-xs font-normal text-slate-500 ml-1">(200 baris terbaru)</span>
+                    </h3>
+                    <div class="flex items-center gap-3">
+                        <input id="log-search" type="text" placeholder="Filter log..." class="bg-slate-900 border border-white/10 rounded-lg px-3 py-1.5 text-xs text-white outline-none focus:border-primary w-48">
+                        <button onclick="loadLogs()" class="text-xs font-bold text-slate-400 hover:text-white flex items-center gap-1 transition-colors">
+                            <span class="material-symbols-outlined text-[16px]">refresh</span>Refresh
+                        </button>
+                    </div>
+                </div>
+                <div id="log-container" class="p-4 font-mono text-xs text-slate-400 max-h-[60vh] overflow-y-auto space-y-0.5 bg-[#050A14]">
+                    <p class="text-slate-600 text-center py-6">Memuat log server...</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<!-- Modal Konfirmasi Hapus User -->
+<div id="delete-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4">
+    <div class="absolute inset-0 bg-black/70 backdrop-blur-md" onclick="closeDeleteModal()"></div>
+    <div class="relative bg-[#0F172A]/90 border border-white/10 rounded-2xl shadow-2xl w-full max-w-sm p-8 text-center transform transition-all duration-300">
+        <div class="w-16 h-16 rounded-full bg-error/10 border border-error/20 flex items-center justify-center mx-auto mb-5">
+            <span class="material-symbols-outlined text-error text-3xl">delete_forever</span>
+        </div>
+        <h3 class="text-lg font-bold text-white mb-2">Hapus Pengguna?</h3>
+        <p id="delete-modal-desc" class="text-sm text-slate-400 mb-8">Semua data transaksi dan notifikasi pengguna ini akan ikut terhapus permanen.</p>
+        <div class="flex gap-4">
+            <button onclick="closeDeleteModal()" class="flex-1 bg-white/5 border border-white/10 text-white font-bold py-3 rounded-xl text-sm transition-all hover:bg-white/10">Batal</button>
+            <button id="confirm-delete-btn" class="flex-1 bg-error hover:bg-red-600 text-white font-bold py-3 rounded-xl text-sm transition-all">Ya, Hapus</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ── ADMIN GUARD ──
+    checkAdmin();
+    populateUserUI();
+
+    let allUsers = [];
+    let deleteTargetId = null;
+
+    // ── TAB SWITCHING ──
+    function switchTab(name) {
+        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+        document.getElementById(`tab-${name}`).classList.add('active');
+        document.getElementById(`tab-${name}-btn`).classList.add('active');
+
+        if (name === 'users') loadUsers();
+        if (name === 'logs') loadLogs();
+        if (name === 'broadcast') loadUsersForBroadcast();
+    }
+
+    // ── LOAD STATS ──
+    async function loadStats() {
+        const res = await adminFetch('/admin/stats');
+        if (!res || res.status !== 'success') return;
+        const d = res.data;
+        document.getElementById('stat-users').textContent = d.total_users;
+        document.getElementById('stat-tx').textContent = d.total_transaksi;
+        document.getElementById('stat-volume').textContent = formatRupiah(d.total_volume);
+        document.getElementById('stat-notif').textContent = d.total_notifikasi;
+    }
+
+    // ── LOAD USERS TABLE ──
+    async function loadUsers() {
+        const tbody = document.getElementById('users-tbody');
+        tbody.innerHTML = `<tr><td colspan="9" class="px-6 py-10 text-center text-slate-500"><span class="material-symbols-outlined animate-spin">autorenew</span></td></tr>`;
+        const res = await adminFetch('/admin/users');
+        if (!res || res.status !== 'success') {
+            tbody.innerHTML = `<tr><td colspan="9" class="text-center py-6 text-red-400">Gagal memuat data pengguna.</td></tr>`;
+            return;
+        }
+        allUsers = res.data;
+        if (allUsers.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="9" class="text-center py-10 text-slate-500">Belum ada pengguna terdaftar.</td></tr>`;
+            return;
+        }
+        tbody.innerHTML = allUsers.map(u => {
+            const isAdmin = u.role === 'admin';
+            const joined = new Date(u.created_at).toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' });
+            return `
+            <tr class="hover:bg-white/[0.02] transition-colors ${isAdmin ? 'bg-amber-500/5' : ''}">
+                <td class="px-6 py-4 text-slate-500 text-xs">#${u.id}</td>
+                <td class="px-6 py-4">
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-black ${isAdmin ? 'bg-amber-500/20 text-amber-400' : 'bg-primary/10 text-primary'}">
+                            ${u.nama_lengkap.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase()}
+                        </div>
+                        <span class="font-bold text-white text-sm">${u.nama_lengkap}</span>
+                    </div>
+                </td>
+                <td class="px-6 py-4 text-slate-400 text-xs">${u.email}</td>
+                <td class="px-6 py-4 text-center font-bold ${u.total_transaksi > 0 ? 'text-white' : 'text-slate-600'}">${u.total_transaksi}</td>
+                <td class="px-6 py-4 text-primary font-bold text-xs">${formatRupiah(u.total_pemasukan)}</td>
+                <td class="px-6 py-4 text-error font-bold text-xs">${formatRupiah(u.total_pengeluaran)}</td>
+                <td class="px-6 py-4 text-slate-500 text-xs">${joined}</td>
+                <td class="px-6 py-4">
+                    <span class="px-2 py-1 text-[10px] font-black uppercase tracking-wider rounded-full ${isAdmin ? 'admin-badge' : 'bg-white/5 text-slate-400 border border-white/10'}">
+                        ${isAdmin ? '👑 Admin' : 'User'}
+                    </span>
+                </td>
+                <td class="px-6 py-4">
+                    <div class="flex items-center justify-end gap-2">
+                        ${!isAdmin ? `
+                        <button onclick="promoteUser(${u.id}, 'admin')" title="Jadikan Admin" class="w-8 h-8 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 flex items-center justify-center text-amber-400 transition-colors">
+                            <span class="material-symbols-outlined text-[15px]">workspace_premium</span>
+                        </button>
+                        <button onclick="openDeleteModal(${u.id}, '${u.nama_lengkap.replace(/'/g, "\\'")}')" title="Hapus User" class="w-8 h-8 rounded-lg bg-error/10 hover:bg-error/20 flex items-center justify-center text-error transition-colors">
+                            <span class="material-symbols-outlined text-[15px]">person_remove</span>
+                        </button>` : `<span class="text-[10px] text-amber-400/50 italic">—</span>`}
+                    </div>
+                </td>
+            </tr>`;
+        }).join('');
+    }
+
+    // ── PROMOTE USER ──
+    async function promoteUser(id, role) {
+        if (!confirm(`Yakin mempromosikan pengguna ini menjadi ${role}?`)) return;
+        const res = await adminFetch(`/admin/users/${id}/role`, {
+            method: 'PUT',
+            body: JSON.stringify({ role })
+        });
+        if (res && res.status === 'success') {
+            loadUsers();
+            loadStats();
+        } else alert('Gagal mengubah role.');
+    }
+
+    // ── DELETE USER MODAL ──
+    function openDeleteModal(id, nama) {
+        deleteTargetId = id;
+        document.getElementById('delete-modal-desc').textContent = `Yakin hapus akun "${nama}"? Semua data akan hilang permanen.`;
+        document.getElementById('delete-modal').classList.remove('hidden');
+        document.getElementById('delete-modal').classList.add('flex');
+        document.getElementById('confirm-delete-btn').onclick = confirmDelete;
+    }
+    function closeDeleteModal() {
+        document.getElementById('delete-modal').classList.add('hidden');
+        document.getElementById('delete-modal').classList.remove('flex');
+        deleteTargetId = null;
+    }
+    async function confirmDelete() {
+        if (!deleteTargetId) return;
+        const res = await adminFetch(`/admin/users/${deleteTargetId}`, { method: 'DELETE' });
+        if (res && res.status === 'success') {
+            closeDeleteModal();
+            loadUsers();
+            loadStats();
+        } else alert('Gagal menghapus pengguna.');
+    }
+
+    // ── BROADCAST ──
+    async function loadUsersForBroadcast() {
+        const select = document.getElementById('bc-target');
+        const res = await adminFetch('/admin/users');
+        if (!res || res.status !== 'success') return;
+        const users = res.data.filter(u => u.role === 'user');
+        const existing = select.innerHTML.split('\n')[0]; // keep 'all' option
+        select.innerHTML = `<option value="all">📢 Semua Pengguna (${users.length} orang)</option>` +
+            users.map(u => `<option value="${u.id}">👤 ${u.nama_lengkap} (${u.email})</option>`).join('');
+    }
+
+    // Live preview
+    document.addEventListener('DOMContentLoaded', () => {
+        const judulInput = document.getElementById('bc-judul');
+        const pesanInput = document.getElementById('bc-pesan');
+        if (judulInput) {
+            judulInput.addEventListener('input', () => {
+                document.getElementById('preview-judul').textContent = judulInput.value || 'Judul notifikasi...';
+            });
+        }
+        if (pesanInput) {
+            pesanInput.addEventListener('input', () => {
+                document.getElementById('preview-pesan').textContent = pesanInput.value || 'Isi pesan akan muncul di sini...';
+            });
+        }
+    });
+
+    document.getElementById('form-broadcast').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('btn-broadcast');
+        const btnText = document.getElementById('btn-bc-text');
+        const alertEl = document.getElementById('bc-alert');
+        btn.disabled = true; btnText.textContent = 'Mengirim...';
+        alertEl.classList.add('hidden');
+
+        const payload = {
+            target: document.getElementById('bc-target').value,
+            judul: document.getElementById('bc-judul').value,
+            pesan: document.getElementById('bc-pesan').value
+        };
+
+        const res = await adminFetch('/admin/broadcast', { method: 'POST', body: JSON.stringify(payload) });
+        btn.disabled = false; btnText.textContent = 'Kirim Notifikasi';
+
+        alertEl.classList.remove('hidden');
+        if (res && res.status === 'success') {
+            alertEl.className = 'px-4 py-3 bg-green-500/10 border border-green-500/30 text-green-400 rounded-xl text-sm flex items-center gap-2';
+            alertEl.innerHTML = `<span class="material-symbols-outlined text-[18px]">check_circle</span>${res.message}`;
+            document.getElementById('form-broadcast').reset();
+            document.getElementById('preview-judul').textContent = 'Judul notifikasi...';
+            document.getElementById('preview-pesan').textContent = 'Isi pesan akan muncul di sini...';
+            loadStats();
+        } else {
+            alertEl.className = 'px-4 py-3 bg-red-500/10 border border-red-500/30 text-red-400 rounded-xl text-sm flex items-center gap-2';
+            alertEl.innerHTML = `<span class="material-symbols-outlined text-[18px]">error</span>${res?.message || 'Gagal mengirim notifikasi.'}`;
+        }
+    });
+
+    // ── LOAD LOGS ──
+    let allLogs = [];
+    async function loadLogs() {
+        const container = document.getElementById('log-container');
+        container.innerHTML = `<p class="text-slate-600 text-center py-6">Memuat log...</p>`;
+        const res = await adminFetch('/admin/logs');
+        if (!res || res.status !== 'success') {
+            container.innerHTML = `<p class="text-red-400 text-center py-6">Gagal memuat log.</p>`;
+            return;
+        }
+        allLogs = res.data;
+        renderLogs(allLogs);
+    }
+
+    function renderLogs(lines) {
+        const container = document.getElementById('log-container');
+        if (lines.length === 0) {
+            container.innerHTML = `<p class="text-slate-600 text-center py-6">Belum ada log. Server baru saja dimulai.</p>`;
+            return;
+        }
+        container.innerHTML = lines.map(line => {
+            // Color code by status
+            let color = 'text-green-400';
+            if (line.includes('| Status: 4')) color = 'text-yellow-400';
+            if (line.includes('| Status: 5')) color = 'text-red-400';
+            if (line.includes('POST')) color += ' font-semibold';
+
+            // Bold IP and URL
+            return `<div class="log-line px-3 py-1 rounded ${color} leading-relaxed">${escapeHtml(line)}</div>`;
+        }).join('');
+    }
+
+    function escapeHtml(str) {
+        return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
+    // Log search filter
+    document.addEventListener('DOMContentLoaded', () => {
+        const logSearch = document.getElementById('log-search');
+        if (logSearch) {
+            logSearch.addEventListener('input', () => {
+                const q = logSearch.value.toLowerCase();
+                const filtered = q ? allLogs.filter(l => l.toLowerCase().includes(q)) : allLogs;
+                renderLogs(filtered);
+            });
+        }
+    });
+
+    // ── INIT ──
+    loadStats();
+    loadUsers();
+</script>
+</body>
+</html>

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html class="light" lang="id">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Support Center - FINTRACK</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="tailwind.config.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Public Sans', sans-serif;
+        }
+        .accordion-content {
+            transition: max-height 0.3s ease-out, padding 0.3s ease;
+            max-height: 0;
+            overflow: hidden;
+        }
+    </style>
+    <script src="theme.js"></script>
+</head>
+<body class="bg-deep-blue text-on-background min-h-screen">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-40 flex justify-between items-center px-6 md:px-12 lg:px-20 h-16 bg-deep-blue/95 backdrop-blur-md border-b border-white/10 shadow-sm">
+    <div class="flex items-center gap-4">
+        <button class="text-white flex items-center" onclick="toggleSidebar()">
+            <span class="material-symbols-outlined">menu</span>
+        </button>
+        <div class="hidden md:flex gap-x-8 items-center">
+            <a class="font-sans antialiased text-sm font-semibold text-slate-400 hover:text-primary transition-colors pb-1" href="dashboard.html">Dashboard</a>
+            <a class="font-sans antialiased text-sm font-semibold text-primary border-b-2 border-primary pb-1" href="support.html">Bantuan</a>
+        </div>
+    </div>
+    <div class="flex items-center gap-4">
+        <div class="relative">
+            <span class="material-symbols-outlined text-slate-400 hover:text-white cursor-pointer transition-colors" onclick="toggleNotificationDropdown(event)">notifications</span>
+        </div>
+        <div class="relative flex items-center gap-3 pl-4 border-l border-white/10">
+            <div class="text-right hidden sm:block">
+                <p class="text-xs font-bold leading-none text-white">Mahasiswa IT</p>
+                <p class="text-[10px] text-slate-400 leading-none mt-1">Advisor Elite</p>
+            </div>
+            <div class="w-8 h-8 rounded-full bg-slate-800 border border-white/10 flex items-center justify-center text-white text-xs font-bold cursor-pointer hover:bg-white/10 transition" onclick="toggleProfileDropdown(event)">IT</div>
+        </div>
+    </div>
+</nav>
+
+<!-- Sidebar Overlay -->
+<div id="sidebar-overlay" class="fixed inset-0 bg-black/60 z-40 hidden backdrop-blur-sm transition-all duration-300" onclick="toggleSidebar()"></div>
+
+<!-- SideNavBar -->
+<aside id="sidebar" class="transform -translate-x-full transition-transform duration-300 fixed left-0 top-0 h-full w-[260px] bg-deep-blue flex flex-col py-6 z-50 border-r border-white/5">
+    <div class="px-6 mb-10 flex justify-between items-center">
+        <div class="text-2xl font-black tracking-tighter flex items-center gap-2">
+            <span class="text-white">FIN</span><span class="text-primary">TRACK</span>
+        </div>
+        <button class="text-slate-400 hover:text-white" onclick="toggleSidebar()">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+    </div>
+    <nav class="flex-1 px-3 space-y-1">
+        <a class="flex items-center px-4 py-3 text-slate-400 hover:bg-white/5 hover:text-white border-l-4 border-transparent font-sans text-sm font-semibold transition-all group" href="dashboard.html">
+            <span class="material-symbols-outlined mr-3">dashboard</span> Dashboard
+        </a>
+        <a class="flex items-center px-4 py-3 text-slate-400 hover:bg-white/5 hover:text-white border-l-4 border-transparent font-sans text-sm font-semibold transition-all group" href="transaksi.html">
+            <span class="material-symbols-outlined mr-3">receipt_long</span> Transaksi
+        </a>
+        <div class="px-4 pb-2">
+            <a class="flex items-center justify-center px-4 py-2 text-primary border border-primary/30 rounded-lg font-sans text-sm font-bold transition-all hover:bg-primary hover:text-white group shadow-sm bg-primary/5" href="tambah_transaksi.html">
+                <span class="material-symbols-outlined mr-2 text-[18px]">add</span> Tambah Transaksi
+            </a>
+        </div>
+        <a class="flex items-center px-4 py-3 text-slate-400 hover:bg-white/5 hover:text-white border-l-4 border-transparent font-sans text-sm font-semibold transition-all group" href="kategori.html">
+            <span class="material-symbols-outlined mr-3">category</span> Kategori
+        </a>
+        <a class="flex items-center px-4 py-3 text-slate-400 hover:bg-white/5 hover:text-white border-l-4 border-transparent font-sans text-sm font-semibold transition-all group" href="pengaturan.html">
+            <span class="material-symbols-outlined mr-3">settings</span> Pengaturan
+        </a>
+        <!-- Special Menu -->
+        <div class="pt-6 pb-2">
+            <a class="flex items-center px-4 py-3 text-slate-400 hover:text-white transition-all group cursor-pointer" onclick="openAiComingSoonModal(event)">
+                <span class="material-symbols-outlined mr-3 text-slate-500">auto_awesome</span>
+                <div class="flex flex-col">
+                    <span class="text-sm font-semibold text-slate-400">✨ Tanya with AI</span>
+                    <span class="text-[9px] font-bold uppercase tracking-wider text-slate-500 leading-none mt-0.5">Coming Soon</span>
+                </div>
+            </a>
+        </div>
+    </nav>
+    <div class="px-3">
+        <div class="border-t border-white/5 mb-2 mx-3"></div>
+        <a class="flex items-center px-4 py-3 text-white bg-primary/10 border-l-4 border-primary rounded-r-lg font-sans text-sm font-semibold transition-all group" href="support.html">
+            <span class="material-symbols-outlined mr-3">help</span> Support
+        </a>
+        <a class="flex items-center px-4 py-3 text-red-400 hover:bg-red-500/10 rounded-lg font-sans text-sm font-semibold transition-all group mt-1" href="index.html">
+            <span class="material-symbols-outlined mr-3 text-red-400">logout</span> Logout
+        </a>
+    </div>
+</aside>
+
+<!-- Main Content Canvas -->
+<main class="ml-0 pt-24 pb-32 px-6 md:px-12 lg:px-20 min-h-screen bg-deep-blue w-full">
+    <div class="w-full mx-auto max-w-5xl space-y-12">
+        
+        <!-- Hero Search Section -->
+        <div class="text-center space-y-6 bg-gradient-to-b from-primary/10 to-transparent p-12 rounded-3xl border border-white/5 relative overflow-hidden">
+            <span class="material-symbols-outlined absolute -left-10 -top-10 text-[200px] text-white/[0.02] transform -rotate-12">help_center</span>
+            <span class="material-symbols-outlined absolute -right-10 -bottom-10 text-[200px] text-white/[0.02] transform rotate-12">headset_mic</span>
+            
+            <div class="relative z-10">
+                <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-white/5 border border-white/10 text-primary mb-6 shadow-xl">
+                    <span class="material-symbols-outlined text-4xl">support_agent</span>
+                </div>
+                <h1 class="text-4xl md:text-5xl font-black text-white tracking-tight mb-4">Halo, ada yang bisa kami bantu?</h1>
+                <p class="text-slate-400 mb-8 max-w-xl mx-auto">Cari solusi, panduan penggunaan, atau hubungi tim *Advisor* eksklusif kami kapan pun Anda butuhkan.</p>
+                
+                <div class="max-w-2xl mx-auto relative group">
+                    <span class="material-symbols-outlined absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors text-[24px]">search</span>
+                    <input type="text" placeholder="Ketik masalah Anda di sini (misal: Lupa Password)..." class="w-full bg-slate-950/60 border border-white/10 rounded-full pl-16 pr-6 py-5 text-base text-white focus:border-primary focus:ring-1 focus:ring-primary focus:bg-slate-900/80 outline-none transition-all shadow-2xl placeholder:text-slate-500">
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Channels -->
+        <div>
+            <h2 class="text-xl font-black text-white mb-6 flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary">forum</span>
+                Hubungi Kami Langsung
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Chat -->
+                <div class="bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 hover:border-primary/50 cursor-pointer transition-all flex flex-col group">
+                    <div class="w-12 h-12 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center mb-4">
+                        <span class="material-symbols-outlined text-2xl">chat</span>
+                    </div>
+                    <h3 class="font-bold text-white mb-2 group-hover:text-primary transition-colors">Live Chat</h3>
+                    <p class="text-xs text-slate-400 mb-6 flex-1">Chat langsung dengan bot interaktif atau agen kami (Waktu respons rata-rata 2 menit).</p>
+                    <button class="w-full py-2.5 bg-blue-500/10 text-blue-400 border border-blue-500/30 rounded-lg text-xs font-bold hover:bg-blue-500 hover:text-white transition-colors">Mulai Chat</button>
+                </div>
+                <!-- WhatsApp -->
+                <div class="bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 hover:border-emerald-500/50 cursor-pointer transition-all flex flex-col group">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center mb-4">
+                        <span class="material-symbols-outlined text-2xl">quickreply</span>
+                    </div>
+                    <h3 class="font-bold text-white mb-2 group-hover:text-emerald-400 transition-colors">WhatsApp Support</h3>
+                    <p class="text-xs text-slate-400 mb-6 flex-1">Konsultasikan keluhan teknis atau masalah pembayaran via WhatsApp.</p>
+                    <a href="#" class="block text-center w-full py-2.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 rounded-lg text-xs font-bold hover:bg-emerald-500 hover:text-white transition-colors">Hubungi via WA</a>
+                </div>
+                <!-- Bug Report -->
+                <div class="bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 hover:border-error/50 cursor-pointer transition-all flex flex-col group" onclick="openBugModal()">
+                    <div class="w-12 h-12 rounded-xl bg-error/20 text-error flex items-center justify-center mb-4">
+                        <span class="material-symbols-outlined text-2xl">bug_report</span>
+                    </div>
+                    <h3 class="font-bold text-white mb-2 group-hover:text-error transition-colors">Lapor Bug / Error</h3>
+                    <p class="text-xs text-slate-400 mb-6 flex-1">Menemukan keganjilan pada sistem kami? Kirimkan laporan agar segera diperbaiki.</p>
+                    <button class="w-full py-2.5 bg-error/10 text-error border border-error/30 rounded-lg text-xs font-bold hover:bg-error hover:text-white transition-colors">Buat Laporan</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ Accordion Section -->
+        <div>
+            <h2 class="text-xl font-black text-white mb-6 flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary">quiz</span>
+                Pertanyaan yang Sering Diajukan (FAQ)
+            </h2>
+            <div class="space-y-4">
+                
+                <!-- FAQ Item 1 -->
+                <div class="bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:border-white/20 transition-colors">
+                    <button class="w-full px-6 py-5 flex justify-between items-center bg-transparent focus:outline-none" onclick="toggleAccordion(this)">
+                        <span class="font-bold text-white text-left pr-4">Apakah data finansial saya aman?</span>
+                        <span class="material-symbols-outlined text-slate-400 transform transition-transform duration-300">expand_more</span>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="px-6 pb-5 pt-0 text-sm text-slate-400 border-t border-white/5 mt-2 pt-4">
+                            Ya, keamanan data Anda adalah prioritas absolut kami. FINTRACK menggunakan enkripsi AES-256 tingkat institusi (*bank-grade encryption*) untuk memastikan bahwa rincian transaksi dan identitas Anda tidak dapat diakses oleh pihak ketiga.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:border-white/20 transition-colors">
+                    <button class="w-full px-6 py-5 flex justify-between items-center bg-transparent focus:outline-none" onclick="toggleAccordion(this)">
+                        <span class="font-bold text-white text-left pr-4">Bagaimana cara membatalkan peringatan anggaran (*Budget Alert*)?</span>
+                        <span class="material-symbols-outlined text-slate-400 transform transition-transform duration-300">expand_more</span>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="px-6 pb-5 pt-0 text-sm text-slate-400 border-t border-white/5 mt-2 pt-4">
+                            Peringatan dapat dinonaktifkan dengan membuka menu <strong>Pengaturan</strong> > tab <strong>Notifikasi</strong>, lalu matikan *toggle* pada opsi "Peringatan Batas Anggaran". Anda juga dapat menyesuaikan ambang batas notifikasinya di sana.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:border-white/20 transition-colors">
+                    <button class="w-full px-6 py-5 flex justify-between items-center bg-transparent focus:outline-none" onclick="toggleAccordion(this)">
+                        <span class="font-bold text-white text-left pr-4">Bisakah saya mengekspor data transaksi ke format Excel/PDF?</span>
+                        <span class="material-symbols-outlined text-slate-400 transform transition-transform duration-300">expand_more</span>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="px-6 pb-5 pt-0 text-sm text-slate-400 border-t border-white/5 mt-2 pt-4">
+                            Tentu bisa. Buka menu <strong>Transaksi</strong>, lalu klik tombol "Ekspor Data" berwarna hijau di pojok kanan atas layar. Anda akan diberikan pilihan untuk mengunduh laporan dalam format .XLSX, .CSV, atau .PDF.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 4 -->
+                <div class="bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:border-white/20 transition-colors">
+                    <button class="w-full px-6 py-5 flex justify-between items-center bg-transparent focus:outline-none" onclick="toggleAccordion(this)">
+                        <span class="font-bold text-white text-left pr-4">Bagaimana cara menghapus akun saya secara permanen?</span>
+                        <span class="material-symbols-outlined text-slate-400 transform transition-transform duration-300">expand_more</span>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="px-6 pb-5 pt-0 text-sm text-slate-400 border-t border-white/5 mt-2 pt-4">
+                            Silakan pergi ke <strong>Pengaturan</strong> > <strong>Keamanan</strong>, lalu gulir ke bagian paling bawah. Anda akan menemukan tombol merah "Hapus Akun Permanen". Perlu diingat bahwa tindakan ini tidak bisa dibatalkan dan semua data finansial Anda akan dihapus total dari server kami.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<!-- BUG REPORT MODAL -->
+<div id="bugModal" class="fixed inset-0 bg-black/80 z-[100] hidden items-center justify-center backdrop-blur-sm opacity-0 transition-opacity duration-300">
+    <div class="bg-slate-900 border border-white/10 w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-transform duration-300" id="bugModalContent">
+        <div class="p-6 border-b border-white/5 flex justify-between items-center">
+            <h2 class="text-xl font-bold text-white flex items-center gap-2">
+                <span class="material-symbols-outlined text-error">bug_report</span>
+                Formulir Laporan Bug
+            </h2>
+            <button onclick="closeBugModal()" class="w-8 h-8 rounded-full bg-white/5 hover:bg-error/20 hover:text-error text-slate-400 flex items-center justify-center transition-colors">
+                <span class="material-symbols-outlined text-[18px]">close</span>
+            </button>
+        </div>
+        <div class="p-6 space-y-4">
+            <div>
+                <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Judul Laporan</label>
+                <input type="text" class="w-full bg-slate-950/60 border border-white/10 rounded-lg px-4 py-3 text-sm text-white focus:border-error focus:ring-1 focus:ring-error outline-none" placeholder="Contoh: Tombol simpan tidak berfungsi di profil">
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Detail Kejadian</label>
+                <textarea rows="4" class="w-full bg-slate-950/60 border border-white/10 rounded-lg px-4 py-3 text-sm text-white focus:border-error focus:ring-1 focus:ring-error outline-none resize-none" placeholder="Jelaskan secara rinci langkah-langkah yang memicu error tersebut..."></textarea>
+            </div>
+        </div>
+        <div class="p-6 border-t border-white/5 bg-white/[0.02] flex justify-end gap-3">
+            <button onclick="closeBugModal()" class="px-5 py-2.5 rounded-lg text-sm font-bold text-slate-400 hover:text-white transition-colors">Batal</button>
+            <button onclick="submitBug()" class="px-5 py-2.5 bg-error text-white font-bold text-sm rounded-lg hover:bg-error/80 transition-colors">Kirim Laporan</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Sidebar Logic
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebar-overlay');
+        
+        if (sidebar.classList.contains('-translate-x-full')) {
+            sidebar.classList.remove('-translate-x-full');
+            overlay.classList.remove('hidden');
+        } else {
+            sidebar.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+        }
+    }
+
+    // Accordion Logic
+    function toggleAccordion(button) {
+        const content = button.nextElementSibling;
+        const icon = button.querySelector('span:last-child');
+        const isExpanded = content.style.maxHeight && content.style.maxHeight !== '0px';
+
+        // Close all other accordions first (optional UX choice)
+        document.querySelectorAll('.accordion-content').forEach((el) => {
+            el.style.maxHeight = null;
+            el.previousElementSibling.querySelector('span:last-child').style.transform = 'rotate(0deg)';
+            el.previousElementSibling.querySelector('span:last-child').classList.remove('text-primary');
+        });
+
+        if (!isExpanded) {
+            content.style.maxHeight = content.scrollHeight + "px";
+            icon.style.transform = 'rotate(180deg)';
+            icon.classList.add('text-primary');
+        } else {
+            content.style.maxHeight = null;
+            icon.style.transform = 'rotate(0deg)';
+            icon.classList.remove('text-primary');
+        }
+    }
+
+    // Modal Logic for Bug Report
+    const bugModal = document.getElementById('bugModal');
+    const bugContent = document.getElementById('bugModalContent');
+
+    function openBugModal() {
+        bugModal.classList.remove('hidden');
+        bugModal.classList.add('flex');
+        setTimeout(() => {
+            bugModal.classList.remove('opacity-0');
+            bugContent.classList.remove('scale-95');
+        }, 10);
+    }
+
+    function closeBugModal() {
+        bugModal.classList.add('opacity-0');
+        bugContent.classList.add('scale-95');
+        setTimeout(() => {
+            bugModal.classList.add('hidden');
+            bugModal.classList.remove('flex');
+        }, 300);
+    }
+
+    function submitBug() {
+        alert("Terima kasih! Laporan Anda telah diteruskan ke tim pengembang.");
+        closeBugModal();
+    }
+</script>
+</body>
+</html>

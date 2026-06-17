@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>FINTRACK - Daftar Akun Baru</title>
+    <meta name="description" content="FINTRACK adalah solusi cerdas untuk mengelola arus kas, mendeteksi kebocoran finansial, dan mencapai target keuangan dengan presisi tingkat institusi.">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="tailwind.config.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+
+</head>
+<body class="bg-background font-body-md text-on-background min-h-screen flex flex-col">
+
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-16 max-w-7xl mx-auto left-0 right-0 bg-white/90 backdrop-blur-md shadow-sm border-b border-slate-200">
+    <div class="text-xl font-bold tracking-tight text-slate-900 font-h2">FINTRACK</div>
+    <nav class="hidden md:flex gap-x-8">
+        <a class="font-body-md font-medium text-slate-600 hover:text-secondary transition-colors" href="Index.html">Beranda</a>
+        <a class="font-body-md font-medium text-slate-600 hover:text-secondary transition-colors" href="#">Fitur</a>
+    </nav>
+</header>
+
+<main class="flex-grow flex items-center justify-center pt-24 pb-12 px-4 relative overflow-hidden">
+    <div class="relative z-10 w-full max-w-[1100px] grid md:grid-cols-2 bg-surface-container-lowest rounded-xl shadow-xl overflow-hidden border border-outline-variant">
+        <div class="hidden md:block relative h-full min-h-[600px]">
+            <img alt="Latar Belakang Gedung Modern" class="absolute inset-0 w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3wwUiWYiw4cmmkAOwT0krY5BR7aou7IS7Ge1rUIE_oTGbl9QfYNEM9lSyU6O4S9C7t8ZbtSh5cg1uiMzBXOzt6E_l_m1Ul5sE_U3T5SPBhWE4bO7vm3kxHP1lNeXEiGwZ7FU3_1Lg5FXvOHGEXt_-pvfEbE4uD4m8yGJQ0lb2x4M3irF2jgOc_s3KpE-_3bjpN4G1EtyK3B0UZfq8eSNn1juFDLu_QB7oGs9h-bcYicBJuk-_sEYiLjSZL_n4Gcxvjsew9h4KVFY">
+            <div class="absolute inset-0 bg-primary-container/60 backdrop-blur-[2px] flex flex-col justify-end p-12 text-on-primary">
+                <h1 class="font-h1 text-white mb-4">Mulai Perjalanan Finansial Anda</h1>
+                <p class="font-body-lg text-slate-200">Bergabunglah dengan ekosistem FINTRACK dan kendalikan aset Anda dengan analitik komprehensif.</p>
+            </div>
+        </div>
+        
+        <div class="p-8 md:p-12 flex flex-col justify-center">
+            <div class="mb-8">
+                <h2 class="font-h2 text-on-surface mb-2">Buat Akun Baru</h2>
+                <p class="font-body-md text-on-surface-variant">Lengkapi data di bawah ini untuk mendaftar.</p>
+            </div>
+            
+            <!-- Alert Messages -->
+            <div id="alert-error" class="hidden mb-4 flex items-center gap-3 px-4 py-3 bg-red-50 border border-red-200 text-red-700 rounded-lg text-sm font-medium">
+                <span class="material-symbols-outlined text-[18px]">error</span>
+                <span id="alert-error-msg">Terjadi kesalahan.</span>
+            </div>
+            <div id="alert-success" class="hidden mb-4 flex items-center gap-3 px-4 py-3 bg-green-50 border border-green-200 text-green-700 rounded-lg text-sm font-medium">
+                <span class="material-symbols-outlined text-[18px]">check_circle</span>
+                <span>Akun berhasil dibuat! Mengalihkan ke dashboard...</span>
+            </div>
+
+            <form id="register-form" class="space-y-5">
+                <div class="space-y-2">
+                    <label for="nama" class="font-label-bold text-on-surface-variant block uppercase">Nama Lengkap</label>
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant">person</span>
+                        <input id="nama" required class="w-full pl-10 pr-4 py-3 bg-white border border-slate-300 rounded-lg outline-none font-body-md focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors" placeholder="John Doe" type="text">
+                    </div>
+                </div>
+
+                <div class="space-y-2">
+                    <label for="email" class="font-label-bold text-on-surface-variant block uppercase">Alamat Email</label>
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant">mail</span>
+                        <input id="email" required class="w-full pl-10 pr-4 py-3 bg-white border border-slate-300 rounded-lg outline-none font-body-md focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors" placeholder="nama@perusahaan.com" type="email">
+                    </div>
+                </div>
+
+                <div class="space-y-2 relative" id="phone-container">
+                    <label for="phone" class="font-label-bold text-on-surface-variant block uppercase">Nomor Handphone</label>
+                    <div class="flex">
+                        <button type="button" onclick="toggleCountryDropdown(event)" id="country-btn" class="flex-shrink-0 z-10 inline-flex items-center py-3 px-3 text-sm font-medium text-center text-slate-900 bg-slate-100 border border-slate-300 rounded-l-lg hover:bg-slate-200 focus:outline-none transition-colors">
+                            <span id="selected-flag">🇮🇩</span> <span id="selected-code" class="ml-1 font-bold">+62</span>
+                            <span class="material-symbols-outlined ml-1 text-[16px] text-slate-500">expand_more</span>
+                        </button>
+                        <div class="relative w-full">
+                            <input id="phone" required class="block p-3 w-full z-20 text-sm text-slate-900 bg-white rounded-r-lg border-l-0 border border-slate-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-colors" placeholder="812 3456 7890" type="tel">
+                        </div>
+                    </div>
+                    
+                    <!-- Dropdown Menu -->
+                    <div id="country-dropdown" class="z-50 hidden absolute top-[72px] left-0 w-72 bg-white rounded-xl shadow-2xl border border-slate-200 overflow-hidden">
+                        <div class="p-3 border-b border-slate-100 bg-slate-50">
+                            <div class="relative">
+                                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[18px]">search</span>
+                                <input type="text" id="country-search" onkeyup="filterCountries()" class="w-full pl-9 pr-3 py-2 text-sm bg-white border border-slate-200 rounded-md focus:outline-none focus:border-blue-400 transition-colors" placeholder="Cari negara atau kode (Cth: +62)...">
+                            </div>
+                        </div>
+                        <ul class="max-h-56 overflow-y-auto text-sm text-slate-700" id="country-list">
+                            <!-- Populated by JS -->
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div class="space-y-2">
+                        <label for="password" class="font-label-bold text-on-surface-variant block uppercase">Kata Sandi</label>
+                        <div class="relative">
+                            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant">lock</span>
+                            <input id="password" required class="w-full pl-10 pr-4 py-3 bg-white border border-slate-300 rounded-lg outline-none font-body-md focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors" placeholder="••••••••" type="password">
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label for="confirm_password" class="font-label-bold text-on-surface-variant block uppercase">Konfirmasi Sandi</label>
+                        <div class="relative">
+                            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant">lock</span>
+                            <input id="confirm_password" required class="w-full pl-10 pr-4 py-3 bg-white border border-slate-300 rounded-lg outline-none font-body-md focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors" placeholder="••••••••" type="password">
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="submit" id="register-btn" class="w-full py-4 mt-2 bg-primary-container text-white font-label-bold rounded-lg shadow-md hover:opacity-90 active:scale-[0.98] transition-all flex justify-center items-center gap-2 text-center">
+                    <span id="register-btn-text">Daftar Akun</span>
+                    <span id="register-btn-icon" class="material-symbols-outlined">person_add</span>
+                    <svg id="register-spinner" class="hidden animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 22 6.477 22 12h-4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.961 3 8.291l3-2.245z"></path>
+                    </svg>
+                </button>
+            </form>
+
+            <div class="mt-6 text-center">
+                <p class="font-body-md text-slate-600">
+                    Sudah punya akun? 
+                    <a href="Login.html" class="font-bold text-primary-container hover:underline">Masuk di sini</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+    const API_URL = 'http://localhost:5000/api';
+
+    // --- Form Submit Handler ---
+    document.getElementById('register-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const nama_lengkap = document.getElementById('nama').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value;
+        const confirm_password = document.getElementById('confirm_password').value;
+        const no_hp = document.getElementById('phone').value.trim();
+        const kode_negara = document.getElementById('selected-code').textContent.trim();
+
+        const alertErr = document.getElementById('alert-error');
+        const alertErrMsg = document.getElementById('alert-error-msg');
+        const alertSuccess = document.getElementById('alert-success');
+        const btn = document.getElementById('register-btn');
+        const btnText = document.getElementById('register-btn-text');
+        const btnIcon = document.getElementById('register-btn-icon');
+        const spinner = document.getElementById('register-spinner');
+
+        // Reset
+        alertErr.classList.add('hidden');
+        alertSuccess.classList.add('hidden');
+
+        // Client-side validation
+        if (password !== confirm_password) {
+            alertErrMsg.textContent = 'Kata sandi tidak cocok!';
+            alertErr.classList.remove('hidden');
+            return;
+        }
+        if (password.length < 6) {
+            alertErrMsg.textContent = 'Kata sandi minimal 6 karakter.';
+            alertErr.classList.remove('hidden');
+            return;
+        }
+
+        // Loading state
+        btn.disabled = true;
+        btnText.textContent = 'Mendaftarkan...';
+        btnIcon.classList.add('hidden');
+        spinner.classList.remove('hidden');
+
+        try {
+            const response = await fetch(`${API_URL}/auth/register`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ nama_lengkap, email, password, no_hp, kode_negara })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || 'Pendaftaran gagal.');
+            }
+
+            // Save token & user
+            localStorage.setItem('fintrack_token', data.token);
+            localStorage.setItem('fintrack_user', JSON.stringify(data.user));
+
+            // Show success & redirect
+            alertSuccess.classList.remove('hidden');
+            btnText.textContent = 'Berhasil!';
+            setTimeout(() => { window.location.href = 'dashboard.html'; }, 1200);
+
+        } catch (error) {
+            alertErrMsg.textContent = error.message;
+            alertErr.classList.remove('hidden');
+            btn.disabled = false;
+            btnText.textContent = 'Daftar Akun';
+            btnIcon.classList.remove('hidden');
+            spinner.classList.add('hidden');
+        }
+    });
+
+    // --- Country Code Dropdown Logic ---
+    const countries = [
+        { name: "Indonesia", code: "+62", flag: "🇮🇩" },
+        { name: "United States", code: "+1", flag: "🇺🇸" },
+        { name: "China", code: "+86", flag: "🇨🇳" },
+        { name: "Singapore", code: "+65", flag: "🇸🇬" },
+        { name: "Malaysia", code: "+60", flag: "🇲🇾" },
+        { name: "Japan", code: "+81", flag: "🇯🇵" },
+        { name: "South Korea", code: "+82", flag: "🇰🇷" },
+        { name: "United Kingdom", code: "+44", flag: "🇬🇧" },
+        { name: "Australia", code: "+61", flag: "🇦🇺" },
+        { name: "India", code: "+91", flag: "🇮🇳" },
+        { name: "Brazil", code: "+55", flag: "🇧🇷" },
+        { name: "Germany", code: "+49", flag: "🇩🇪" },
+        { name: "France", code: "+33", flag: "🇫🇷" },
+        { name: "Netherlands", code: "+31", flag: "🇳🇱" },
+        { name: "Saudi Arabia", code: "+966", flag: "🇸🇦" },
+        { name: "United Arab Emirates", code: "+971", flag: "🇦🇪" },
+        { name: "Philippines", code: "+63", flag: "🇵🇭" },
+        { name: "Thailand", code: "+66", flag: "🇹🇭" },
+        { name: "Vietnam", code: "+84", flag: "🇻🇳" },
+        { name: "Turkey", code: "+90", flag: "🇹🇷" },
+    ];
+
+    const countryList = document.getElementById('country-list');
+    const countryDropdown = document.getElementById('country-dropdown');
+    const selectedFlag = document.getElementById('selected-flag');
+    const selectedCode = document.getElementById('selected-code');
+    const countrySearch = document.getElementById('country-search');
+
+    function renderCountries(list) {
+        countryList.innerHTML = '';
+        if (list.length === 0) {
+            countryList.innerHTML = '<li class="px-4 py-3 text-slate-500 text-center">Negara tidak ditemukan</li>';
+            return;
+        }
+        list.forEach(country => {
+            const li = document.createElement('li');
+            li.className = "px-4 py-2 hover:bg-slate-100 cursor-pointer flex items-center justify-between transition-colors";
+            li.innerHTML = `
+                <div class="flex items-center">
+                    <span class="text-lg mr-3">${country.flag}</span>
+                    <span class="font-medium">${country.name}</span>
+                </div>
+                <span class="text-slate-500 font-mono">${country.code}</span>
+            `;
+            li.onclick = () => selectCountry(country.flag, country.code);
+            countryList.appendChild(li);
+        });
+    }
+
+    function toggleCountryDropdown(event) {
+        event.stopPropagation();
+        countryDropdown.classList.toggle('hidden');
+        if (!countryDropdown.classList.contains('hidden')) countrySearch.focus();
+    }
+
+    function selectCountry(flag, code) {
+        selectedFlag.textContent = flag;
+        selectedCode.textContent = code;
+        countryDropdown.classList.add('hidden');
+        document.getElementById('phone').focus();
+    }
+
+    function filterCountries() {
+        const query = countrySearch.value.toLowerCase();
+        const filtered = countries.filter(c => c.name.toLowerCase().includes(query) || c.code.includes(query));
+        renderCountries(filtered);
+    }
+
+    document.addEventListener('click', (event) => {
+        if (!event.target.closest('#phone-container')) {
+            countryDropdown.classList.add('hidden');
+        }
+    });
+
+    // Initial render
+    renderCountries(countries);
+</script>
+</body>
+</html>
+
+
