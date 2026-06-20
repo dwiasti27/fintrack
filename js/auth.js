@@ -5,7 +5,7 @@
  */
 
 // Auto-detect: pakai Railway jika bukan localhost
-const RAILWAY_URL = 'https://fintrack-backend.up.railway.app/api';
+const RAILWAY_URL = 'https://fintrack-production-b81d.up.railway.app/api';
 const API_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
     ? 'http://localhost:5000/api'
     : RAILWAY_URL;
