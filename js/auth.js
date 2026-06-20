@@ -4,7 +4,12 @@
  * It checks for a valid JWT token and redirects to Login if not found.
  */
 
-const API_URL = 'http://localhost:5000/api';
+// Auto-detect: pakai Railway jika bukan localhost
+const RAILWAY_URL = 'https://fintrack-backend.up.railway.app/api';
+const API_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+    ? 'http://localhost:5000/api'
+    : RAILWAY_URL;
+
 
 // --- Auth Guard (for all protected pages) ---
 function checkAuth() {
